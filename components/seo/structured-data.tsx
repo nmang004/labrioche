@@ -1,4 +1,4 @@
-import Script from 'next/script'
+import Script from 'next/script';
 
 interface ProductData {
   name: string;
@@ -13,8 +13,8 @@ interface BreadcrumbItem {
 }
 
 interface StructuredDataProps {
-  type?: 'organization' | 'bakery' | 'product' | 'breadcrumb'
-  data?: ProductData | BreadcrumbItem[] | unknown
+  type?: 'organization' | 'bakery' | 'product' | 'breadcrumb';
+  data?: ProductData | BreadcrumbItem[] | unknown;
 }
 
 export function StructuredData({ type = 'organization', data }: StructuredDataProps) {
@@ -25,27 +25,30 @@ export function StructuredData({ type = 'organization', data }: StructuredDataPr
           '@context': 'https://schema.org',
           '@type': 'Bakery',
           name: 'La Brioche',
-          description: 'Artisan French bakery specializing in authentic pastries, breads, and French cuisine in Norfolk, Virginia',
+          description:
+            'Artisan French bakery specializing in authentic pastries, breads, and French cuisine in Norfolk, Virginia',
           url: 'https://labriochenorfolk.com',
-          telephone: '+1-757-555-0123',
-          email: 'info@labriochenorfolk.com',
+          telephone: '+1-757-226-9745',
+          email: 'yvanbakery@gmail.com',
           address: {
             '@type': 'PostalAddress',
-            streetAddress: '123 Main Street',
+            streetAddress: '1415 Colley Avenue',
             addressLocality: 'Norfolk',
             addressRegion: 'VA',
-            postalCode: '23510',
-            addressCountry: 'US'
+            postalCode: '23517',
+            addressCountry: 'US',
           },
           geo: {
             '@type': 'GeoCoordinates',
             latitude: '36.8508',
-            longitude: '-76.2859'
+            longitude: '-76.2859',
           },
           openingHours: [
-            'Mo-Fr 06:00-18:00',
-            'Sa 07:00-19:00',
-            'Su 08:00-16:00'
+            'We 08:00-14:00',
+            'Th 08:00-14:00',
+            'Fr 08:00-17:00',
+            'Sa 08:00-14:00',
+            'Su 08:30-12:30',
           ],
           servesCuisine: 'French',
           priceRange: '$$',
@@ -53,12 +56,12 @@ export function StructuredData({ type = 'organization', data }: StructuredDataPr
           paymentAccepted: 'Cash, Credit Card',
           sameAs: [
             'https://www.facebook.com/labriochenorfolk',
-            'https://www.instagram.com/labriochenorfolk'
+            'https://www.instagram.com/labriochenorfolk',
           ],
           logo: 'https://labriochenorfolk.com/images/logo.png',
-          image: 'https://labriochenorfolk.com/images/storefront.jpg'
-        }
-      
+          image: 'https://labriochenorfolk.com/images/storefront.jpg',
+        };
+
       case 'bakery':
         return {
           '@context': 'https://schema.org',
@@ -66,90 +69,107 @@ export function StructuredData({ type = 'organization', data }: StructuredDataPr
           '@id': 'https://labriochenorfolk.com',
           name: 'La Brioche',
           alternateName: 'La Brioche Norfolk',
-          description: 'Premier French artisan bakery in Norfolk, VA, offering fresh daily pastries, breads, and authentic French cuisine',
+          description:
+            'Premier French artisan bakery in Norfolk, VA, offering fresh daily pastries, breads, and authentic French cuisine',
           url: 'https://labriochenorfolk.com',
-          telephone: '+1-757-555-0123',
-          email: 'info@labriochenorfolk.com',
+          telephone: '+1-757-226-9745',
+          email: 'yvanbakery@gmail.com',
           address: {
             '@type': 'PostalAddress',
-            streetAddress: '123 Main Street',
+            streetAddress: '1415 Colley Avenue',
             addressLocality: 'Norfolk',
             addressRegion: 'Virginia',
-            postalCode: '23510',
-            addressCountry: 'United States'
+            postalCode: '23517',
+            addressCountry: 'United States',
           },
           hasMap: 'https://maps.google.com/?q=La+Brioche+Norfolk+VA',
           openingHoursSpecification: [
             {
               '@type': 'OpeningHoursSpecification',
-              dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-              opens: '06:00',
-              closes: '18:00'
+              dayOfWeek: 'Wednesday',
+              opens: '08:00',
+              closes: '14:00',
+            },
+            {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: 'Thursday',
+              opens: '08:00',
+              closes: '14:00',
+            },
+            {
+              '@type': 'OpeningHoursSpecification',
+              dayOfWeek: 'Friday',
+              opens: '08:00',
+              closes: '17:00',
             },
             {
               '@type': 'OpeningHoursSpecification',
               dayOfWeek: 'Saturday',
-              opens: '07:00',
-              closes: '19:00'
+              opens: '08:00',
+              closes: '14:00',
             },
             {
               '@type': 'OpeningHoursSpecification',
               dayOfWeek: 'Sunday',
-              opens: '08:00',
-              closes: '16:00'
-            }
+              opens: '08:30',
+              closes: '12:30',
+            },
           ],
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: '4.8',
-            reviewCount: '127'
-          }
-        }
-      
+            reviewCount: '127',
+          },
+        };
+
       case 'product':
         const productData = data as ProductData;
-        return productData ? {
-          '@context': 'https://schema.org',
-          '@type': 'Product',
-          name: productData.name,
-          description: productData.description,
-          image: productData.image,
-          brand: {
-            '@type': 'Brand',
-            name: 'La Brioche'
-          },
-          offers: {
-            '@type': 'Offer',
-            price: productData.price,
-            priceCurrency: 'USD',
-            availability: 'https://schema.org/InStock',
-            seller: {
-              '@type': 'Organization',
-              name: 'La Brioche'
+        return productData
+          ? {
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: productData.name,
+              description: productData.description,
+              image: productData.image,
+              brand: {
+                '@type': 'Brand',
+                name: 'La Brioche',
+              },
+              offers: {
+                '@type': 'Offer',
+                price: productData.price,
+                priceCurrency: 'USD',
+                availability: 'https://schema.org/InStock',
+                seller: {
+                  '@type': 'Organization',
+                  name: 'La Brioche',
+                },
+              },
             }
-          }
-        } : null
-      
+          : null;
+
       case 'breadcrumb':
-        return data ? {
-          '@context': 'https://schema.org',
-          '@type': 'BreadcrumbList',
-          itemListElement: (data as BreadcrumbItem[]).map((item, index: number) => ({
-            '@type': 'ListItem',
-            position: index + 1,
-            name: item.name,
-            item: item.url
-          }))
-        } : null
-      
+        return data
+          ? {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: (data as BreadcrumbItem[]).map((item, index: number) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: item.name,
+                item: item.url,
+              })),
+            }
+          : null;
+
       default:
-        return null
+        return null;
     }
-  }
+  };
 
-  const structuredData = getStructuredData()
+  const structuredData = getStructuredData();
 
-  if (!structuredData) return null
+  if (!structuredData) return null;
 
   return (
     <Script
@@ -157,5 +177,5 @@ export function StructuredData({ type = 'organization', data }: StructuredDataPr
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
     />
-  )
+  );
 }

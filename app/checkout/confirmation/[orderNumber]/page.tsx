@@ -152,8 +152,8 @@ export default function OrderConfirmationPage() {
                 <div className="flex items-start gap-2 mt-3">
                   <MapPin className="h-4 w-4 text-blue-600 mt-0.5" />
                   <div className="text-xs text-blue-800">
-                    <p>123 Main Street</p>
-                    <p>Norfolk, VA 23510</p>
+                    <p>1415 Colley Avenue</p>
+                    <p>Norfolk, Virginia 23517</p>
                   </div>
                 </div>
               </div>
@@ -245,12 +245,12 @@ export default function OrderConfirmationPage() {
         <div className="mt-8 p-4 bg-muted rounded-lg text-center text-sm text-muted-foreground">
           <p>
             Need to make changes? Contact us at{' '}
-            <a href="tel:+1234567890" className="text-primary hover:underline">
-              (123) 456-7890
+            <a href="tel:+17572269745" className="text-primary hover:underline">
+              1-757-226-9745
             </a>{' '}
             or{' '}
-            <a href="mailto:orders@labriochenorfolk.com" className="text-primary hover:underline">
-              orders@labriochenorfolk.com
+            <a href="mailto:yvanbakery@gmail.com" className="text-primary hover:underline">
+              yvanbakery@gmail.com
             </a>
           </p>
         </div>

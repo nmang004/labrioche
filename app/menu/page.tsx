@@ -146,8 +146,8 @@ export default async function MenuPage() {
         </p>
         <p className="text-sm">
           Call us at{' '}
-          <a href="tel:+17575551234" className="font-medium text-primary hover:underline">
-            (757) 555-1234
+          <a href="tel:+17572269745" className="font-medium text-primary hover:underline">
+            1-757-226-9745
           </a>{' '}
           to discuss your needs.
         </p>

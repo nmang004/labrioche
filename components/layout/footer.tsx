@@ -44,7 +44,10 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/account/my-orders" className="text-muted-foreground hover:text-primary">
+                <Link
+                  href="/account/my-orders"
+                  className="text-muted-foreground hover:text-primary"
+                >
                   Order History
                 </Link>
               </li>
@@ -55,9 +58,13 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold">Hours</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Monday - Friday: 7:00 AM - 7:00 PM</li>
-              <li>Saturday: 8:00 AM - 8:00 PM</li>
-              <li>Sunday: 8:00 AM - 6:00 PM</li>
+              <li>Wednesday: 8:00 AM - 2:00 PM</li>
+              <li>Thursday: 8:00 AM - 2:00 PM</li>
+              <li>Friday: 8:00 AM - 5:00 PM</li>
+              <li>Saturday: 8:00 AM - 2:00 PM</li>
+              <li>Sunday: 8:30 AM - 12:30 PM</li>
+              <li>Monday: CLOSED</li>
+              <li>Tuesday: CLOSED</li>
             </ul>
           </div>
 
@@ -68,20 +75,21 @@ export function Footer() {
               <li className="flex items-start space-x-2 text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
                 <span>
-                  123 Main Street<br />
-                  Norfolk, VA 23510
+                  1415 Colley Avenue
+                  <br />
+                  Norfolk, Virginia 23517
                 </span>
               </li>
               <li className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4 flex-shrink-0" />
-                <a href="tel:+17575551234" className="hover:text-primary">
-                  (757) 555-1234
+                <a href="tel:+17572269745" className="hover:text-primary">
+                  1-757-226-9745
                 </a>
               </li>
               <li className="flex items-center space-x-2 text-muted-foreground">
                 <Mail className="h-4 w-4 flex-shrink-0" />
-                <a href="mailto:hello@labriochenorfolk.com" className="hover:text-primary">
-                  hello@labriochenorfolk.com
+                <a href="mailto:yvanbakery@gmail.com" className="hover:text-primary">
+                  yvanbakery@gmail.com
                 </a>
               </li>
             </ul>

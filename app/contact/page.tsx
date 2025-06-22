@@ -19,11 +19,11 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // TODO: Implement actual form submission
     try {
       // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       // TODO: Implement form submission to backend
       setSubmitStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
@@ -35,7 +35,7 @@ export default function ContactPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -66,8 +66,9 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium">Address</p>
                   <p className="text-muted-foreground">
-                    123 Main Street<br />
-                    Norfolk, VA 23510
+                    1415 Colley Avenue
+                    <br />
+                    Norfolk, Virginia 23517
                   </p>
                 </div>
               </div>
@@ -77,9 +78,13 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium">Hours</p>
                   <div className="text-muted-foreground space-y-1">
-                    <p>Monday - Friday: 7:00 AM - 7:00 PM</p>
-                    <p>Saturday: 8:00 AM - 8:00 PM</p>
-                    <p>Sunday: 8:00 AM - 6:00 PM</p>
+                    <p>Wednesday: 8:00 AM - 2:00 PM</p>
+                    <p>Thursday: 8:00 AM - 2:00 PM</p>
+                    <p>Friday: 8:00 AM - 5:00 PM</p>
+                    <p>Saturday: 8:00 AM - 2:00 PM</p>
+                    <p>Sunday: 8:30 AM - 12:30 PM</p>
+                    <p>Monday: CLOSED</p>
+                    <p>Tuesday: CLOSED</p>
                   </div>
                 </div>
               </div>
@@ -88,11 +93,8 @@ export default function ContactPage() {
                 <Phone className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium">Phone</p>
-                  <a 
-                    href="tel:+17575551234" 
-                    className="text-muted-foreground hover:text-primary"
-                  >
-                    (757) 555-1234
+                  <a href="tel:+17572269745" className="text-muted-foreground hover:text-primary">
+                    1-757-226-9745
                   </a>
                 </div>
               </div>
@@ -101,11 +103,11 @@ export default function ContactPage() {
                 <Mail className="h-5 w-5 text-primary mt-0.5" />
                 <div>
                   <p className="font-medium">Email</p>
-                  <a 
-                    href="mailto:hello@labriochenorfolk.com" 
+                  <a
+                    href="mailto:yvanbakery@gmail.com"
                     className="text-muted-foreground hover:text-primary"
                   >
-                    hello@labriochenorfolk.com
+                    yvanbakery@gmail.com
                   </a>
                 </div>
               </div>
@@ -184,12 +186,7 @@ export default function ContactPage() {
                 </div>
               )}
 
-              <Button 
-                type="submit" 
-                size="lg" 
-                className="w-full"
-                loading={isSubmitting}
-              >
+              <Button type="submit" size="lg" className="w-full" loading={isSubmitting}>
                 Send Message
               </Button>
             </form>
@@ -205,8 +202,8 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Planning an event? We offer catering for weddings, corporate events, 
-              and special occasions.
+              Planning an event? We offer catering for weddings, corporate events, and special
+              occasions.
             </p>
           </CardContent>
         </Card>
@@ -217,8 +214,7 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Need something special? We accept custom orders with 48 hours notice 
-              for most items.
+              Need something special? We accept custom orders with 48 hours notice for most items.
             </p>
           </CardContent>
         </Card>
@@ -229,8 +225,7 @@ export default function ContactPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground">
-              Give the gift of French pastries! Gift cards available in-store 
-              in any denomination.
+              Give the gift of French pastries! Gift cards available in-store in any denomination.
             </p>
           </CardContent>
         </Card>

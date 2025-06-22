@@ -32,9 +32,7 @@ export default async function HomePage() {
           {/* Placeholder for hero image */}
         </div>
         <div className="relative z-20 text-center text-white max-w-3xl mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6">
-            Welcome to La Brioche
-          </h1>
+          <h1 className="text-5xl md:text-7xl font-serif mb-6">Welcome to La Brioche</h1>
           <p className="text-xl md:text-2xl mb-8 text-white/90">
             Experience the authentic taste of French artisan baking in the heart of Norfolk
           </p>
@@ -44,10 +42,13 @@ export default async function HomePage() {
                 View Our Menu <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20" asChild>
-              <Link href="/contact">
-                Visit Us Today
-              </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20"
+              asChild
+            >
+              <Link href="/contact">Visit Us Today</Link>
             </Button>
           </div>
         </div>
@@ -60,17 +61,17 @@ export default async function HomePage() {
             <div className="flex items-center gap-3">
               <Clock className="h-5 w-5 text-primary" />
               <span className="text-sm">
-                Open Daily: Mon-Fri 7AM-7PM | Sat 8AM-8PM | Sun 8AM-6PM
+                Wed-Thu: 8AM-2PM | Fri: 8AM-5PM | Sat: 8AM-2PM | Sun: 8:30AM-12:30PM
               </span>
             </div>
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-primary" />
-              <span className="text-sm">123 Main Street, Norfolk, VA 23510</span>
+              <span className="text-sm">1415 Colley Avenue, Norfolk, Virginia 23517</span>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-primary" />
-              <a href="tel:+17575551234" className="text-sm hover:text-primary">
-                (757) 555-1234
+              <a href="tel:+17572269745" className="text-sm hover:text-primary">
+                1-757-226-9745
               </a>
             </div>
           </div>
@@ -104,30 +105,26 @@ export default async function HomePage() {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-serif mb-4">Customer Favorites</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover our most beloved pastries and breads, freshly baked every morning
-              with the finest ingredients imported from France.
+              Discover our most beloved pastries and breads, freshly baked every morning with the
+              finest ingredients imported from France.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map((product) => (
-                <ProductCard
-                  key={product._id}
-                  id={product._id}
-                  name={product.name}
-                  price={product.price}
-                  image={product.image}
-                  description={product.description}
-                  available={product.available}
-                />
-              ))
-            ) : (
-              // Show skeletons if no products
-              Array.from({ length: 6 }).map((_, i) => (
-                <ProductCardSkeleton key={i} />
-              ))
-            )}
+            {featuredProducts.length > 0
+              ? featuredProducts.map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    id={product._id}
+                    name={product.name}
+                    price={product.price}
+                    image={product.image}
+                    description={product.description}
+                    available={product.available}
+                  />
+                ))
+              : // Show skeletons if no products
+                Array.from({ length: 6 }).map((_, i) => <ProductCardSkeleton key={i} />)}
           </div>
 
           <div className="text-center">
@@ -147,14 +144,14 @@ export default async function HomePage() {
             <div>
               <h2 className="text-4xl font-serif mb-6">Our Story</h2>
               <p className="text-lg text-muted-foreground mb-6">
-                La Brioche brings the authentic taste of French artisan baking to Norfolk, Virginia. 
-                Our master bakers use traditional techniques passed down through generations, 
+                La Brioche brings the authentic taste of French artisan baking to Norfolk, Virginia.
+                Our master bakers use traditional techniques passed down through generations,
                 combined with the finest ingredients imported directly from France.
               </p>
               <p className="text-lg text-muted-foreground mb-8">
-                Every morning, our ovens come alive before dawn, filling our bakery with the 
-                irresistible aroma of fresh bread and pastries. From our signature croissants 
-                to our rustic sourdough, each item is crafted with passion and precision.
+                Every morning, our ovens come alive before dawn, filling our bakery with the
+                irresistible aroma of fresh bread and pastries. From our signature croissants to our
+                rustic sourdough, each item is crafted with passion and precision.
               </p>
               <Button variant="outline" asChild>
                 <Link href="/our-story">
@@ -176,19 +173,20 @@ export default async function HomePage() {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-serif mb-6">Order Ahead for Pickup</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
-            Skip the line and have your favorite items ready when you arrive. 
-            Order online for convenient pickup at our Norfolk location.
+            Skip the line and have your favorite items ready when you arrive. Order online for
+            convenient pickup at our Norfolk location.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/menu">
-                Order Now
-              </Link>
+              <Link href="/menu">Order Now</Link>
             </Button>
-            <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20" asChild>
-              <Link href="/account/signup">
-                Create Account
-              </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20"
+              asChild
+            >
+              <Link href="/account/signup">Create Account</Link>
             </Button>
           </div>
         </div>
