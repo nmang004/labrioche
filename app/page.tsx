@@ -80,13 +80,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Product Recommendations */}
-      <section className="py-12 bg-secondary/5">
-        <div className="container mx-auto px-4">
-          <ProductRecommendations maxItems={4} />
-        </div>
-      </section>
-
       {/* Featured Products */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -128,7 +121,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-serif mb-6">Our Story</h2>
+              <h2 className="text-4xl font-serif mb-6">Welcome to La Brioche</h2>
               <p className="text-lg text-muted-foreground mb-6">
                 La Brioche brings the authentic taste of French artisan baking to Norfolk, Virginia.
                 Our master bakers use traditional techniques passed down through generations,
@@ -151,6 +144,13 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Product Recommendations */}
+      <section className="py-12 bg-secondary/5">
+        <div className="container mx-auto px-4">
+          <ProductRecommendations maxItems={4} />
         </div>
       </section>
 
