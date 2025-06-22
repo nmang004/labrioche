@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/client';
@@ -35,16 +35,13 @@ export default function OrderConfirmationPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetchOrder();
-  }, [orderNumber]);
-
-  const fetchOrder = async () => {
+  const fetchOrder = useCallback(async () => {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
         .from('orders')
-        .select(`
+        .select(
+          `
           *,
           order_items (
             id,
@@ -52,7 +49,8 @@ export default function OrderConfirmationPage() {
             quantity,
             price
           )
-        `)
+        `
+        )
         .eq('order_number', orderNumber)
         .single();
 
@@ -75,7 +73,11 @@ export default function OrderConfirmationPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [orderNumber]);
+
+  useEffect(() => {
+    fetchOrder();
+  }, [orderNumber, fetchOrder]);
 
   if (loading) {
     return (
@@ -131,7 +133,7 @@ export default function OrderConfirmationPage() {
               Placed on {format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a')}
             </CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-6">
             {/* Pickup Information */}
             <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
@@ -161,7 +163,9 @@ export default function OrderConfirmationPage() {
             <div>
               <h3 className="font-semibold mb-3">Customer Information</h3>
               <div className="space-y-2 text-sm">
-                <p><strong>Name:</strong> {order.customerName}</p>
+                <p>
+                  <strong>Name:</strong> {order.customerName}
+                </p>
                 <p className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
                   {order.customerEmail}
@@ -180,16 +184,15 @@ export default function OrderConfirmationPage() {
               <h3 className="font-semibold mb-3">Order Items</h3>
               <div className="space-y-2">
                 {order.items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-center py-2 border-b last:border-b-0">
+                  <div
+                    key={item.id}
+                    className="flex justify-between items-center py-2 border-b last:border-b-0"
+                  >
                     <div>
                       <p className="font-medium">{item.productName}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Quantity: {item.quantity}
-                      </p>
+                      <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
                     </div>
-                    <p className="font-medium">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </p>
+                    <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
               </div>

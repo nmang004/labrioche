@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -24,21 +24,11 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (user) {
-      fetchProfile();
-    }
-  }, [user]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
     if (!user) return;
 
     const supabase = createClient();
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single();
+    const { data, error } = await supabase.from('profiles').select('*').eq('id', user.id).single();
 
     if (error) {
       console.error('Error fetching profile:', error);
@@ -47,9 +37,15 @@ export default function ProfilePage() {
       setFullName(data.full_name || '');
       setPhone(data.phone || '');
     }
-    
+
     setLoading(false);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile();
+    }
+  }, [user, fetchProfile]);
 
   const updateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,14 +55,12 @@ export default function ProfilePage() {
     setMessage('');
 
     const supabase = createClient();
-    const { error } = await supabase
-      .from('profiles')
-      .upsert({
-        id: user.id,
-        full_name: fullName,
-        phone: phone,
-        updated_at: new Date().toISOString(),
-      });
+    const { error } = await supabase.from('profiles').upsert({
+      id: user.id,
+      full_name: fullName,
+      phone: phone,
+      updated_at: new Date().toISOString(),
+    });
 
     if (error) {
       setMessage('Error updating profile: ' + error.message);
@@ -90,19 +84,15 @@ export default function ProfilePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Profile</h1>
-        <p className="text-muted-foreground">
-          Manage your account information
-        </p>
+        <p className="text-muted-foreground">Manage your account information</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
-          <CardDescription>
-            Update your personal details here
-          </CardDescription>
+          <CardDescription>Update your personal details here</CardDescription>
         </CardHeader>
-        
+
         <CardContent>
           <form onSubmit={updateProfile} className="space-y-4">
             <div className="space-y-2">
@@ -119,9 +109,7 @@ export default function ProfilePage() {
                   disabled
                 />
               </div>
-              <p className="text-xs text-muted-foreground">
-                Email cannot be changed
-              </p>
+              <p className="text-xs text-muted-foreground">Email cannot be changed</p>
             </div>
 
             <div className="space-y-2">
@@ -159,20 +147,18 @@ export default function ProfilePage() {
             </div>
 
             {message && (
-              <div className={`text-sm p-3 rounded-md ${
-                message.includes('Error') 
-                  ? 'text-red-600 bg-red-50' 
-                  : 'text-green-600 bg-green-50'
-              }`}>
+              <div
+                className={`text-sm p-3 rounded-md ${
+                  message.includes('Error')
+                    ? 'text-red-600 bg-red-50'
+                    : 'text-green-600 bg-green-50'
+                }`}
+              >
                 {message}
               </div>
             )}
 
-            <Button
-              type="submit"
-              disabled={saving}
-              className="flex items-center gap-2"
-            >
+            <Button type="submit" disabled={saving} className="flex items-center gap-2">
               <Save className="h-4 w-4" />
               {saving ? 'Saving...' : 'Save Changes'}
             </Button>

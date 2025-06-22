@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuthStore } from '@/lib/stores/auth-store';
 import { createClient } from '@/lib/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,19 +15,14 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      fetchOrders();
-    }
-  }, [user]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     if (!user) return;
 
     const supabase = createClient();
     const { data, error } = await supabase
       .from('orders')
-      .select(`
+      .select(
+        `
         *,
         order_items (
           id,
@@ -37,7 +32,8 @@ export default function OrdersPage() {
           price,
           customizations
         )
-      `)
+      `
+      )
       .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
@@ -46,9 +42,15 @@ export default function OrdersPage() {
     } else {
       setOrders(data || []);
     }
-    
+
     setLoading(false);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchOrders();
+    }
+  }, [user, fetchOrders]);
 
   const getStatusIcon = (status: Order['status']) => {
     switch (status) {
@@ -96,9 +98,7 @@ export default function OrdersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">My Orders</h1>
-        <p className="text-muted-foreground">
-          View your order history and track current orders
-        </p>
+        <p className="text-muted-foreground">View your order history and track current orders</p>
       </div>
 
       {orders.length === 0 ? (
@@ -121,9 +121,7 @@ export default function OrdersPage() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-lg">
-                      Order #{order.orderNumber}
-                    </CardTitle>
+                    <CardTitle className="text-lg">Order #{order.orderNumber}</CardTitle>
                     <CardDescription>
                       Placed on {format(new Date(order.createdAt), 'MMMM d, yyyy')}
                     </CardDescription>
@@ -135,38 +133,36 @@ export default function OrdersPage() {
                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                       </span>
                     </Badge>
-                    <p className="text-lg font-semibold">
-                      ${order.totalPrice.toFixed(2)}
-                    </p>
+                    <p className="text-lg font-semibold">${order.totalPrice.toFixed(2)}</p>
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="space-y-3">
                   {order.items.map((item: OrderItem) => (
-                    <div key={item.id} className="flex items-center justify-between py-2 border-b last:border-b-0">
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between py-2 border-b last:border-b-0"
+                    >
                       <div>
                         <h4 className="font-medium">{item.productName}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Quantity: {item.quantity}
-                        </p>
+                        <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
                       </div>
-                      <p className="font-medium">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </p>
+                      <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
-                
+
                 {order.pickupTime && (
                   <div className="mt-4 p-3 bg-muted rounded-md">
                     <p className="text-sm">
-                      <strong>Pickup Time:</strong> {format(new Date(order.pickupTime), 'MMMM d, yyyy h:mm a')}
+                      <strong>Pickup Time:</strong>{' '}
+                      {format(new Date(order.pickupTime), 'MMMM d, yyyy h:mm a')}
                     </p>
                   </div>
                 )}
-                
+
                 {order.notes && (
                   <div className="mt-4 p-3 bg-muted rounded-md">
                     <p className="text-sm">
