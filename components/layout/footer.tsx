@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Instagram, Mail, MapPin, Phone } from 'lucide-react';
+import { DynamicHours } from '@/components/ui/dynamic-hours';
 
 export function Footer() {
   return (
@@ -55,18 +56,7 @@ export function Footer() {
           </div>
 
           {/* Hours */}
-          <div className="space-y-4">
-            <h4 className="font-semibold">Hours</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Wednesday: 8:00 AM - 2:00 PM</li>
-              <li>Thursday: 8:00 AM - 2:00 PM</li>
-              <li>Friday: 8:00 AM - 5:00 PM</li>
-              <li>Saturday: 8:00 AM - 2:00 PM</li>
-              <li>Sunday: 8:30 AM - 12:30 PM</li>
-              <li>Monday: CLOSED</li>
-              <li>Tuesday: CLOSED</li>
-            </ul>
-          </div>
+          <DynamicHours variant="full" className="text-muted-foreground" />
 
           {/* Contact */}
           <div className="space-y-4">

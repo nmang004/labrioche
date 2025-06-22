@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ui/product-card';
 import { ProductCardSkeleton } from '@/components/ui/product-card-skeleton';
 import { PersonalizedGreeting } from '@/components/ui/personalized-greeting';
 import { ProductRecommendations } from '@/components/ui/product-recommendations';
 import { FavoritesSection } from '@/components/ui/favorites-section';
+import { DynamicHours } from '@/components/ui/dynamic-hours';
 import { sanityClient } from '@/lib/sanity/client';
 import { FEATURED_PRODUCTS_QUERY } from '@/lib/sanity/queries';
 import { Product } from '@/types';
@@ -58,12 +59,7 @@ export default async function HomePage() {
       <section className="bg-secondary/30 py-6">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 text-center md:text-left">
-            <div className="flex items-center gap-3">
-              <Clock className="h-5 w-5 text-primary" />
-              <span className="text-sm">
-                Wed-Thu: 8AM-2PM | Fri: 8AM-5PM | Sat: 8AM-2PM | Sun: 8:30AM-12:30PM
-              </span>
-            </div>
+            <DynamicHours variant="today-only" />
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-primary" />
               <span className="text-sm">1415 Colley Avenue, Norfolk, Virginia 23517</span>

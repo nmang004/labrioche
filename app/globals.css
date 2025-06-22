@@ -2,63 +2,63 @@
 
 @layer base {
   :root {
-    /* The Gilded Artisan - La Brioche Color Palette */
-    /* Canvas White: Primary background (60% usage) */
-    --background: 0 0% 100%;
-    /* Artisan Charcoal: Primary text and UI elements (30% usage) */
-    --foreground: 0 0% 13%;
+    /* The Gallery Palette - La Brioche Refined Color Scheme */
+    /* Gallery White: Primary background (60% usage) */
+    --background: 0 0% 98%;
+    /* Slate Ink: Primary text and UI elements (30% usage) */
+    --foreground: 0 0% 17%;
 
-    /* Golden Croissant: Accessible version for CTAs with white text (10% usage) */
-    --primary: 38 79% 34%;
-    --primary-foreground: 0 0% 100%;
+    /* Heirloom Gold: Precious accent for CTAs (10% usage) */
+    --primary: 32 23% 70%;
+    --primary-foreground: 0 0% 17%;
 
-    /* Soft Shadow: Subtle backgrounds and separators */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 13%;
+    /* Silverpoint: Subtle backgrounds and separators */
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 17%;
 
-    /* Golden Croissant: Lighter version for accents and highlights */
-    --accent: 34 68% 63%;
-    --accent-foreground: 0 0% 13%;
+    /* Heirloom Gold: Refined accent and highlights */
+    --accent: 32 23% 70%;
+    --accent-foreground: 0 0% 17%;
 
     /* Destructive: Error states */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Soft Shadow: Muted backgrounds */
-    --muted: 0 0% 96%;
+    /* Silverpoint: Muted backgrounds */
+    --muted: 0 0% 92%;
     --muted-foreground: 0 0% 45%;
 
-    /* Canvas White: Card backgrounds */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    /* Gallery White: Card backgrounds */
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 17%;
 
-    /* Canvas White: Popover backgrounds */
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    /* Gallery White: Popover backgrounds */
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 17%;
 
-    /* Soft Shadow: Borders and inputs */
-    --border: 0 0% 96%;
-    --input: 0 0% 96%;
-    --ring: 38 79% 34%;
+    /* Silverpoint: Borders and inputs */
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 32 23% 70%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark mode: Inverted Gilded Artisan palette */
+    /* Dark mode: Inverted Gallery palette */
     --background: 0 0% 6%;
     --foreground: 0 0% 98%;
 
-    /* Golden Croissant: Brighter version for dark mode buttons */
-    --primary: 34 68% 68%;
+    /* Heirloom Gold: Enhanced for dark mode visibility */
+    --primary: 32 23% 75%;
     --primary-foreground: 0 0% 6%;
 
     /* Dark complementary secondary */
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
 
-    /* Golden Croissant: Enhanced for dark mode visibility */
-    --accent: 34 68% 68%;
+    /* Heirloom Gold: Refined for dark mode */
+    --accent: 32 23% 75%;
     --accent-foreground: 0 0% 6%;
 
     /* Destructive: Unchanged for consistency */
@@ -80,7 +80,7 @@
     /* Dark borders and inputs */
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 34 68% 68%;
+    --ring: 32 23% 75%;
   }
 }
 
