@@ -82,11 +82,7 @@ const components = {
       if (!value?.href) return <span>{children}</span>;
       const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined;
       return (
-        <a
-          href={value.href}
-          rel={rel}
-          className="text-primary hover:underline"
-        >
+        <a href={value.href} rel={rel} className="text-primary hover:underline">
           {children}
         </a>
       );
@@ -101,26 +97,28 @@ export default async function OurStoryPage() {
   const fallbackContent = (
     <>
       <h1 className="text-4xl md:text-5xl font-serif mb-8 text-center">Our Story</h1>
-      
+
       <div className="prose prose-lg max-w-none">
         <p className="text-xl text-muted-foreground mb-8 text-center max-w-3xl mx-auto">
-          La Brioche is more than a bakery—it&apos;s a celebration of French culinary tradition 
-          brought to life in the heart of Norfolk, Virginia.
+          From the Neon District to Colley Avenue, La Brioche brings the authentic taste of French
+          artisan bakeries to Norfolk, Virginia.
         </p>
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <h2 className="text-3xl font-serif mb-4">A Passion for Perfection</h2>
+            <h2 className="text-3xl font-serif mb-4">Our Journey</h2>
             <p className="text-lg text-muted-foreground mb-4">
-              Founded in 2020, La Brioche was born from a dream to share the authentic taste 
-              of French artisan baking with our Norfolk community. Our founder, trained in the 
-              prestigious bakeries of Paris, brought decades of expertise and a commitment to 
-              traditional techniques.
+              In March 2019, Yvan and Jacqueline started La Brioche to bring memories of authentic
+              French artisan bakeries to their new home in the Neon District.
+            </p>
+            <p className="text-lg text-muted-foreground mb-4">
+              From the baguette and the croissants, to the quiches and sandwiches, you will find
+              baked goods that make you feel as if you were at a street cafe in Paris.
             </p>
             <p className="text-lg text-muted-foreground">
-              Every morning before dawn, our bakers begin their craft, carefully mixing, 
-              kneading, and shaping each product by hand. We believe that true quality comes 
-              from patience, skill, and the finest ingredients.
+              In 2024, we decided to move out of the Neon District and to establish the bakery on
+              Colley Avenue, where we continue to serve our community with the same passion and
+              dedication to authentic French baking.
             </p>
           </div>
           <div className="relative h-[400px] rounded-lg overflow-hidden bg-gradient-to-br from-secondary to-accent/30">
@@ -139,8 +137,8 @@ export default async function OurStoryPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Authenticity</h3>
               <p className="text-muted-foreground">
-                We stay true to traditional French baking methods, using time-honored 
-                techniques passed down through generations.
+                We stay true to traditional French baking methods, using time-honored techniques
+                passed down through generations.
               </p>
             </div>
             <div className="text-center">
@@ -149,8 +147,8 @@ export default async function OurStoryPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Quality Ingredients</h3>
               <p className="text-muted-foreground">
-                We source the finest ingredients, including French butter, organic flours, 
-                and seasonal produce from local farms.
+                We source the finest ingredients, including French butter, organic flours, and
+                seasonal produce from local farms.
               </p>
             </div>
             <div className="text-center">
@@ -159,7 +157,7 @@ export default async function OurStoryPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Community Love</h3>
               <p className="text-muted-foreground">
-                We&apos;re proud to be part of Norfolk&apos;s vibrant community, supporting local 
+                We&apos;re proud to be part of Norfolk&apos;s vibrant community, supporting local
                 events and bringing neighbors together.
               </p>
             </div>
@@ -167,21 +165,22 @@ export default async function OurStoryPage() {
         </div>
 
         <div className="bg-secondary/20 rounded-lg p-8 mb-16">
-          <h2 className="text-3xl font-serif mb-4 text-center">Meet Our Master Baker</h2>
+          <h2 className="text-3xl font-serif mb-4 text-center">Meet Our Founders</h2>
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="relative h-[300px] rounded-lg overflow-hidden bg-gradient-to-br from-primary/20 to-accent/20">
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-primary/50 text-lg font-medium">Master Baker</span>
+                <span className="text-primary/50 text-lg font-medium">Yvan & Jacqueline</span>
               </div>
             </div>
             <div>
               <p className="text-lg text-muted-foreground mb-4">
-                &quot;Baking is not just my profession—it&apos;s my art. Every croissant, every 
-                baguette, every pastry is crafted with love and dedication. When you taste 
-                our products, you&apos;re experiencing a piece of France right here in Norfolk.&quot;
+                &quot;We started La Brioche with a simple dream: to share the authentic flavors and
+                warmth of French bakeries with our Norfolk community. Every croissant, every
+                baguette, every pastry is crafted with the love and tradition we grew up with in
+                France.&quot;
               </p>
-              <p className="font-semibold">- Chef François Dubois</p>
-              <p className="text-sm text-muted-foreground">Founder & Master Baker</p>
+              <p className="font-semibold">- Yvan & Jacqueline</p>
+              <p className="text-sm text-muted-foreground">Founders & Artisan Bakers</p>
             </div>
           </div>
         </div>
@@ -189,9 +188,8 @@ export default async function OurStoryPage() {
         <div className="text-center">
           <h2 className="text-3xl font-serif mb-4">Visit Us Today</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            We invite you to experience the warmth of our bakery and the exceptional 
-            quality of our French pastries and breads. From our family to yours, 
-            bienvenue à La Brioche!
+            We invite you to experience the warmth of our bakery and the exceptional quality of our
+            French pastries and breads. From our family to yours, bienvenue à La Brioche!
           </p>
         </div>
       </div>
@@ -202,9 +200,7 @@ export default async function OurStoryPage() {
     <div className="container mx-auto px-4 py-12 max-w-4xl">
       {pageContent ? (
         <>
-          <h1 className="text-4xl md:text-5xl font-serif mb-8 text-center">
-            {pageContent.title}
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-serif mb-8 text-center">{pageContent.title}</h1>
           <div className="prose prose-lg max-w-none">
             <PortableText value={pageContent.body} components={components} />
           </div>
