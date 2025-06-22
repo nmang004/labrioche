@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { Menu, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -19,6 +20,11 @@ const navigation = [
 export function Header() {
   const pathname = usePathname();
   const { user } = useAuthStore();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleMobileNavClick = () => {
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -37,9 +43,7 @@ export function Header() {
                 href={item.href}
                 className={cn(
                   'text-sm font-medium transition-colors hover:text-primary',
-                  pathname === item.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground'
+                  pathname === item.href ? 'text-foreground' : 'text-muted-foreground'
                 )}
               >
                 {item.name}
@@ -50,13 +54,8 @@ export function Header() {
           {/* Right side actions */}
           <div className="flex items-center space-x-4">
             {/* User account */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="hidden md:flex"
-              asChild
-            >
-              <Link href={user ? "/account/profile" : "/auth/login"}>
+            <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
+              <Link href={user ? '/account/profile' : '/auth/login'}>
                 <User className="h-5 w-5" />
                 <span className="sr-only">Account</span>
               </Link>
@@ -66,7 +65,7 @@ export function Header() {
             <CartDrawer />
 
             {/* Mobile menu */}
-            <Sheet>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-5 w-5" />
@@ -82,11 +81,10 @@ export function Header() {
                     <Link
                       key={item.name}
                       href={item.href}
+                      onClick={handleMobileNavClick}
                       className={cn(
                         'text-lg font-medium transition-colors hover:text-primary',
-                        pathname === item.href
-                          ? 'text-foreground'
-                          : 'text-muted-foreground'
+                        pathname === item.href ? 'text-foreground' : 'text-muted-foreground'
                       )}
                     >
                       {item.name}
@@ -94,10 +92,11 @@ export function Header() {
                   ))}
                   <hr className="my-4" />
                   <Link
-                    href={user ? "/account/profile" : "/auth/login"}
+                    href={user ? '/account/profile' : '/auth/login'}
+                    onClick={handleMobileNavClick}
                     className="text-lg font-medium text-muted-foreground hover:text-primary"
                   >
-                    {user ? "My Account" : "Sign In"}
+                    {user ? 'My Account' : 'Sign In'}
                   </Link>
                 </nav>
               </SheetContent>
