@@ -1,103 +1,198 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { ProductCard } from '@/components/ui/product-card';
+import { ProductCardSkeleton } from '@/components/ui/product-card-skeleton';
+import { PersonalizedGreeting } from '@/components/ui/personalized-greeting';
+import { ProductRecommendations } from '@/components/ui/product-recommendations';
+import { FavoritesSection } from '@/components/ui/favorites-section';
+import { sanityClient } from '@/lib/sanity/client';
+import { FEATURED_PRODUCTS_QUERY } from '@/lib/sanity/queries';
+import { Product } from '@/types';
 
-export default function Home() {
+async function getFeaturedProducts() {
+  try {
+    const products = await sanityClient.fetch<Product[]>(FEATURED_PRODUCTS_QUERY);
+    return products;
+  } catch (error) {
+    console.error('Error fetching featured products:', error);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const featuredProducts = await getFeaturedProducts();
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+      {/* Hero Section */}
+      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary/50 to-accent/30">
+          {/* Placeholder for hero image */}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <div className="relative z-20 text-center text-white max-w-3xl mx-auto px-4">
+          <h1 className="text-5xl md:text-7xl font-serif mb-6">
+            Welcome to La Brioche
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-white/90">
+            Experience the authentic taste of French artisan baking in the heart of Norfolk
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="secondary" asChild>
+              <Link href="/menu">
+                View Our Menu <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20" asChild>
+              <Link href="/contact">
+                Visit Us Today
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Info Bar */}
+      <section className="bg-secondary/30 py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 text-center md:text-left">
+            <div className="flex items-center gap-3">
+              <Clock className="h-5 w-5 text-primary" />
+              <span className="text-sm">
+                Open Daily: Mon-Fri 7AM-7PM | Sat 8AM-8PM | Sun 8AM-6PM
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <MapPin className="h-5 w-5 text-primary" />
+              <span className="text-sm">123 Main Street, Norfolk, VA 23510</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone className="h-5 w-5 text-primary" />
+              <a href="tel:+17575551234" className="text-sm hover:text-primary">
+                (757) 555-1234
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Personalized Greeting */}
+      <section className="py-12 bg-secondary/10">
+        <div className="container mx-auto px-4">
+          <PersonalizedGreeting className="text-center" />
+        </div>
+      </section>
+
+      {/* Favorites Section */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <FavoritesSection maxItems={4} />
+        </div>
+      </section>
+
+      {/* Product Recommendations */}
+      <section className="py-12 bg-secondary/5">
+        <div className="container mx-auto px-4">
+          <ProductRecommendations maxItems={4} />
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-serif mb-4">Customer Favorites</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Discover our most beloved pastries and breads, freshly baked every morning
+              with the finest ingredients imported from France.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {featuredProducts.length > 0 ? (
+              featuredProducts.map((product) => (
+                <ProductCard
+                  key={product._id}
+                  id={product._id}
+                  name={product.name}
+                  price={product.price}
+                  image={product.image}
+                  description={product.description}
+                  available={product.available}
+                />
+              ))
+            ) : (
+              // Show skeletons if no products
+              Array.from({ length: 6 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))
+            )}
+          </div>
+
+          <div className="text-center">
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/menu">
+                View Full Menu <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-16 bg-secondary/20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-serif mb-6">Our Story</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                La Brioche brings the authentic taste of French artisan baking to Norfolk, Virginia. 
+                Our master bakers use traditional techniques passed down through generations, 
+                combined with the finest ingredients imported directly from France.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                Every morning, our ovens come alive before dawn, filling our bakery with the 
+                irresistible aroma of fresh bread and pastries. From our signature croissants 
+                to our rustic sourdough, each item is crafted with passion and precision.
+              </p>
+              <Button variant="outline" asChild>
+                <Link href="/our-story">
+                  Learn More About Us <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+            <div className="relative h-[400px] rounded-lg overflow-hidden bg-gradient-to-br from-secondary to-accent/30">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="text-white/50 text-lg font-medium">Baker at Work</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-primary text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-4xl font-serif mb-6">Order Ahead for Pickup</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-white/90">
+            Skip the line and have your favorite items ready when you arrive. 
+            Order online for convenient pickup at our Norfolk location.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="secondary" asChild>
+              <Link href="/menu">
+                Order Now
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white/20" asChild>
+              <Link href="/account/signup">
+                Create Account
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

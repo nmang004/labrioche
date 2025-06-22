@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://labriochenorfolk.com/sitemap.xml
+
+# Disallow sensitive paths
+Disallow: /api/
+Disallow: /account/
+Disallow: /auth/
+Disallow: /checkout/
+Disallow: /_next/
+Disallow: /admin/
