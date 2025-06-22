@@ -83,7 +83,7 @@ export function Footer() {
               <li className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4 flex-shrink-0" />
                 <a href="tel:+17572269745" className="hover:text-primary">
-                  1-757-226-9745
+                  (757) 226-9745
                 </a>
               </li>
               <li className="flex items-center space-x-2 text-muted-foreground">

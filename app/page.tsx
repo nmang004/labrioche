@@ -71,7 +71,7 @@ export default async function HomePage() {
             <div className="flex items-center gap-3">
               <Phone className="h-5 w-5 text-primary" />
               <a href="tel:+17572269745" className="text-sm hover:text-primary">
-                1-757-226-9745
+                (757) 226-9745
               </a>
             </div>
           </div>

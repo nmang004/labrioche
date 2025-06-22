@@ -94,7 +94,7 @@ export default function ContactPage() {
                 <div>
                   <p className="font-medium">Phone</p>
                   <a href="tel:+17572269745" className="text-muted-foreground hover:text-primary">
-                    1-757-226-9745
+                    (757) 226-9745
                   </a>
                 </div>
               </div>

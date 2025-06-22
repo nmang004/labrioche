@@ -246,7 +246,7 @@ export default function OrderConfirmationPage() {
           <p>
             Need to make changes? Contact us at{' '}
             <a href="tel:+17572269745" className="text-primary hover:underline">
-              1-757-226-9745
+              (757) 226-9745
             </a>{' '}
             or{' '}
             <a href="mailto:yvanbakery@gmail.com" className="text-primary hover:underline">
