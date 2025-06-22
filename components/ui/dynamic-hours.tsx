@@ -69,16 +69,23 @@ export function DynamicHours({ variant = 'today-only', className }: DynamicHours
       <div className={cn('flex items-center gap-3', className)}>
         <Clock className="h-5 w-5 text-primary" />
         <span className="text-sm">
-          Today ({todayHours.day}): {todayHours.hours}
-          {todayHours.isOpen && (
-            <span
-              className={cn(
-                'ml-2 px-2 py-0.5 rounded-full text-xs font-medium',
-                isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-              )}
-            >
-              {isOpen ? 'OPEN' : 'CLOSED'}
-            </span>
+          {todayHours.isOpen ? (
+            <>
+              Today ({todayHours.day}): {isOpen ? todayHours.hours : 'CLOSED'}
+              <span
+                className={cn(
+                  'ml-2 px-2 py-0.5 rounded-full text-xs font-medium',
+                  isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                )}
+              >
+                {isOpen ? 'OPEN' : 'CLOSED'}
+              </span>
+              {!isOpen && <span className="text-muted-foreground"> ({todayHours.hours})</span>}
+            </>
+          ) : (
+            <>
+              Today ({todayHours.day}): {todayHours.hours}
+            </>
           )}
         </span>
       </div>
@@ -125,7 +132,13 @@ export function DynamicHours({ variant = 'today-only', className }: DynamicHours
                   isToday && 'font-semibold'
                 )}
               >
-                {day.hours}
+                {isToday && day.isOpen && !isOpen ? (
+                  <>
+                    CLOSED <span className="text-muted-foreground">({day.hours})</span>
+                  </>
+                ) : (
+                  day.hours
+                )}
                 {isToday && day.isOpen && (
                   <span
                     className={cn(

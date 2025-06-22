@@ -2,27 +2,19 @@ import Link from 'next/link';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ui/product-card';
-import { ProductCardSkeleton } from '@/components/ui/product-card-skeleton';
 import { PersonalizedGreeting } from '@/components/ui/personalized-greeting';
 import { ProductRecommendations } from '@/components/ui/product-recommendations';
 import { FavoritesSection } from '@/components/ui/favorites-section';
 import { DynamicHours } from '@/components/ui/dynamic-hours';
-import { sanityClient } from '@/lib/sanity/client';
-import { FEATURED_PRODUCTS_QUERY } from '@/lib/sanity/queries';
-import { Product } from '@/types';
+import { fallbackProducts } from '@/lib/fallback-menu-data';
 
-async function getFeaturedProducts() {
-  try {
-    const products = await sanityClient.fetch<Product[]>(FEATURED_PRODUCTS_QUERY);
-    return products;
-  } catch (error) {
-    console.error('Error fetching featured products:', error);
-    return [];
-  }
+function getFeaturedProducts() {
+  // Filter featured products from fallback data
+  return fallbackProducts.filter((product) => product.featured && product.available);
 }
 
-export default async function HomePage() {
-  const featuredProducts = await getFeaturedProducts();
+export default function HomePage() {
+  const featuredProducts = getFeaturedProducts();
 
   return (
     <>
@@ -107,20 +99,17 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {featuredProducts.length > 0
-              ? featuredProducts.map((product) => (
-                  <ProductCard
-                    key={product._id}
-                    id={product._id}
-                    name={product.name}
-                    price={product.price}
-                    image={product.image}
-                    description={product.description}
-                    available={product.available}
-                  />
-                ))
-              : // Show skeletons if no products
-                Array.from({ length: 6 }).map((_, i) => <ProductCardSkeleton key={i} />)}
+            {featuredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                id={product._id}
+                name={product.name}
+                price={product.price}
+                image={product.image}
+                description={product.description}
+                available={product.available}
+              />
+            ))}
           </div>
 
           <div className="text-center">
