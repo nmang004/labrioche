@@ -21,14 +21,14 @@ interface ProductRecommendationsProps {
   className?: string;
 }
 
-export function ProductRecommendations({ 
-  maxItems = 4, 
-  title = "Recommended for You",
-  className 
+export function ProductRecommendations({
+  maxItems = 4,
+  title = 'Recommended for You',
+  className,
 }: ProductRecommendationsProps) {
   const [recommendations, setRecommendations] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const user = useAuthStore((state) => state.user);
   const favorites = useFavoritesStore((state) => state.items);
   const cartItems = useCartStore((state) => state.items);
@@ -37,7 +37,7 @@ export function ProductRecommendations({
     async function generateRecommendations() {
       try {
         setLoading(true);
-        
+
         if (!user) {
           // For guests, show featured products
           const featuredProducts = await sanityClient.fetch(FEATURED_PRODUCTS_QUERY);
@@ -47,47 +47,49 @@ export function ProductRecommendations({
 
         // For authenticated users, create personalized recommendations
         const allProducts = await sanityClient.fetch(PRODUCTS_QUERY);
-        
+
         // Get user's interaction data
-        const favoriteIds = new Set(favorites.map(f => f.id));
-        const cartItemIds = new Set(cartItems.map(c => c.id));
-        
+        const favoriteIds = new Set(favorites.map((f) => f.id));
+        const cartItemIds = new Set(cartItems.map((c) => c.id));
+
         // Filter out items already in cart or favorites for recommendation diversity
-        const availableProducts = allProducts.filter((product: Product) => 
-          !cartItemIds.has(product._id) && !favoriteIds.has(product._id)
+        const availableProducts = allProducts.filter(
+          (product: Product) => !cartItemIds.has(product._id) && !favoriteIds.has(product._id)
         );
 
         // Recommendation algorithm
         const scored = availableProducts.map((product: Product) => {
           let score = 0;
-          
+
           // Base score for featured items
           if (product.featured) score += 3;
-          
+
           // Boost score if user has items from same category in favorites
-          const hasFavoriteInCategory = favorites.some(fav => {
+          const hasFavoriteInCategory = favorites.some((fav) => {
             const favProduct = allProducts.find((p: Product) => p._id === fav.id);
             return favProduct?.category._id === product.category._id;
           });
           if (hasFavoriteInCategory) score += 2;
-          
+
           // Boost score if user has items from same category in cart
-          const hasCartItemInCategory = cartItems.some(item => {
+          const hasCartItemInCategory = cartItems.some((item) => {
             const cartProduct = allProducts.find((p: Product) => p._id === item.id);
             return cartProduct?.category._id === product.category._id;
           });
           if (hasCartItemInCategory) score += 1;
-          
+
           // Random factor for diversity
           score += Math.random() * 0.5;
-          
+
           return { product, score };
         });
 
         // Sort by score and take top items
         scored.sort((a: ScoredProduct, b: ScoredProduct) => b.score - a.score);
-        const topRecommendations = scored.slice(0, maxItems).map((item: ScoredProduct) => item.product);
-        
+        const topRecommendations = scored
+          .slice(0, maxItems)
+          .map((item: ScoredProduct) => item.product);
+
         setRecommendations(topRecommendations);
       } catch (error) {
         console.error('Error generating recommendations:', error);
@@ -144,6 +146,7 @@ export function ProductRecommendations({
             image={product.image}
             description={product.description}
             available={product.available}
+            categoryId={product.category?._id}
           />
         ))}
       </div>

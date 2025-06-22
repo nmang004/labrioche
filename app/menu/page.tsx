@@ -5,8 +5,8 @@ import { PRODUCTS_QUERY, CATEGORIES_QUERY } from '@/lib/sanity/queries';
 import { Product, Category } from '@/types';
 import { ProductCard } from '@/components/ui/product-card';
 import { ProductCardSkeleton } from '@/components/ui/product-card-skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getFallbackMenuData } from '@/lib/fallback-menu-data';
+import { CategorySelector } from '@/components/ui/category-selector';
 
 export const metadata: Metadata = {
   title: 'Menu',
@@ -54,6 +54,7 @@ function ProductGrid({ products }: { products: Product[] }) {
           image={product.image}
           description={product.description}
           available={product.available}
+          categoryId={product.category?._id}
         />
       ))}
     </div>
@@ -108,26 +109,7 @@ export default async function MenuPage() {
       </div>
 
       {categories.length > 0 ? (
-        <Tabs defaultValue={categories[0]?._id} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-6 mb-8">
-            {categories.map((category) => (
-              <TabsTrigger key={category._id} value={category._id}>
-                {category.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {categories.map((category) => (
-            <TabsContent key={category._id} value={category._id}>
-              {category.description && (
-                <p className="text-center text-muted-foreground mb-8">{category.description}</p>
-              )}
-              <Suspense fallback={<LoadingGrid />}>
-                <ProductGrid products={productsByCategory[category._id] || []} />
-              </Suspense>
-            </TabsContent>
-          ))}
-        </Tabs>
+        <CategorySelector categories={categories} productsByCategory={productsByCategory} />
       ) : (
         <div className="space-y-12">
           <div>
