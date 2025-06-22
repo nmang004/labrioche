@@ -1,66 +1,86 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   :root {
+    /* The Gilded Artisan - La Brioche Color Palette */
+    /* Canvas White: Primary background (60% usage) */
     --background: 0 0% 100%;
-    --foreground: 0 0% 20%;
-    
-    --primary: 226 100% 33%;
+    /* Artisan Charcoal: Primary text and UI elements (30% usage) */
+    --foreground: 0 0% 13%;
+
+    /* Golden Croissant: Accessible version for CTAs with white text (10% usage) */
+    --primary: 38 79% 34%;
     --primary-foreground: 0 0% 100%;
-    
-    --secondary: 25 30% 92%;
-    --secondary-foreground: 0 0% 20%;
-    
-    --accent: 45 100% 50%;
-    --accent-foreground: 0 0% 20%;
-    
+
+    /* Soft Shadow: Subtle backgrounds and separators */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 13%;
+
+    /* Golden Croissant: Lighter version for accents and highlights */
+    --accent: 34 68% 63%;
+    --accent-foreground: 0 0% 13%;
+
+    /* Destructive: Error states */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
+
+    /* Soft Shadow: Muted backgrounds */
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
-    
+
+    /* Canvas White: Card backgrounds */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 20%;
-    
+    --card-foreground: 0 0% 13%;
+
+    /* Canvas White: Popover backgrounds */
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 20%;
-    
-    --border: 0 0% 92%;
-    --input: 0 0% 92%;
-    --ring: 226 100% 33%;
-    
+    --popover-foreground: 0 0% 13%;
+
+    /* Soft Shadow: Borders and inputs */
+    --border: 0 0% 96%;
+    --input: 0 0% 96%;
+    --ring: 38 79% 34%;
+
     --radius: 0.5rem;
   }
-  
+
   .dark {
+    /* Dark mode: Inverted Gilded Artisan palette */
     --background: 0 0% 6%;
     --foreground: 0 0% 98%;
-    
-    --primary: 226 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 25 30% 15%;
+
+    /* Golden Croissant: Brighter version for dark mode buttons */
+    --primary: 34 68% 68%;
+    --primary-foreground: 0 0% 6%;
+
+    /* Dark complementary secondary */
+    --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
-    
-    --accent: 45 100% 60%;
-    --accent-foreground: 0 0% 20%;
-    
+
+    /* Golden Croissant: Enhanced for dark mode visibility */
+    --accent: 34 68% 68%;
+    --accent-foreground: 0 0% 6%;
+
+    /* Destructive: Unchanged for consistency */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    
+
+    /* Dark muted tones */
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
-    
+
+    /* Dark card backgrounds */
     --card: 0 0% 10%;
     --card-foreground: 0 0% 98%;
-    
+
+    /* Dark popover backgrounds */
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 98%;
-    
+
+    /* Dark borders and inputs */
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 226 100% 50%;
+    --ring: 34 68% 68%;
   }
 }
 
@@ -103,38 +123,38 @@
   .font-display-swap {
     font-display: swap;
   }
-  
+
   /* Image lazy loading utilities */
   .img-lazy {
     content-visibility: auto;
     contain-intrinsic-size: 200px;
   }
-  
+
   /* Critical resource hints */
   .preload-font {
     font-display: swap;
   }
-  
+
   /* Reduce layout shift */
   .aspect-ratio-preserve {
     aspect-ratio: attr(width) / attr(height);
   }
-  
+
   /* Smooth scrolling for better UX */
   html {
     scroll-behavior: smooth;
   }
-  
+
   /* Optimize animations */
   .will-change-transform {
     will-change: transform;
   }
-  
+
   /* Contain layout for better performance */
   .contain-layout {
     contain: layout;
   }
-  
+
   /* Reduce paint on scroll */
   .transform-gpu {
     transform: translateZ(0);
