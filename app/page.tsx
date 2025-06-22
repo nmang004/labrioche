@@ -32,7 +32,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
               <Link href="/menu">
-                View Our Menu <ArrowRight className="ml-2 h-5 w-5" />
+                View Our Menu <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button
@@ -115,7 +115,7 @@ export default function HomePage() {
           <div className="text-center">
             <Button size="lg" variant="outline" asChild>
               <Link href="/menu">
-                View Full Menu <ArrowRight className="ml-2 h-5 w-5" />
+                View Full Menu <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -140,7 +140,7 @@ export default function HomePage() {
               </p>
               <Button variant="outline" asChild>
                 <Link href="/our-story">
-                  Learn More About Us <ArrowRight className="ml-2 h-5 w-5" />
+                  Learn More About Us <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
             </div>
