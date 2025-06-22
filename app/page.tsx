@@ -31,7 +31,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" asChild>
-              <Link href="/menu">
+              <Link href="/menu" className="flex items-center gap-2 whitespace-nowrap">
                 View Our Menu <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -108,13 +108,14 @@ export default function HomePage() {
                 image={product.image}
                 description={product.description}
                 available={product.available}
+                categoryId={product.category._id}
               />
             ))}
           </div>
 
           <div className="text-center">
             <Button size="lg" variant="outline" asChild>
-              <Link href="/menu">
+              <Link href="/menu" className="flex items-center gap-2 whitespace-nowrap">
                 View Full Menu <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -139,7 +140,7 @@ export default function HomePage() {
                 rustic sourdough, each item is crafted with passion and precision.
               </p>
               <Button variant="outline" asChild>
-                <Link href="/our-story">
+                <Link href="/our-story" className="flex items-center gap-2 whitespace-nowrap">
                   Learn More About Us <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
