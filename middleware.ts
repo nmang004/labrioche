@@ -70,6 +70,14 @@ export async function middleware(request: NextRequest) {
 
   if (isProtectedRoute) {
     try {
+      // Special handling for demo admin access to /admin routes
+      if (request.nextUrl.pathname.startsWith('/admin')) {
+        const demoAdminCookie = request.cookies.get('demo_admin_session');
+        if (demoAdminCookie?.value === 'true') {
+          return response; // Allow demo admin access without authentication
+        }
+      }
+
       // Create supabase client for middleware
       const supabase = createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -125,6 +133,12 @@ export async function middleware(request: NextRequest) {
 
       // Admin route protection
       if (request.nextUrl.pathname.startsWith('/admin')) {
+        // Check for demo admin session
+        const demoAdminCookie = request.cookies.get('demo_admin_session');
+        if (demoAdminCookie?.value === 'true') {
+          return response; // Allow demo admin access
+        }
+
         // For now, allow any authenticated user to access admin
         // In production, uncomment the following to check for admin role:
         /*

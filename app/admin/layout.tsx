@@ -26,6 +26,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const checkAdminAccess = async () => {
       try {
+        // Check for demo admin session first
+        const demoSession = localStorage.getItem('demo_admin_session');
+        if (demoSession) {
+          try {
+            const sessionData = JSON.parse(demoSession);
+            setProfile(sessionData.profile);
+            setIsLoading(false);
+            return;
+          } catch {
+            localStorage.removeItem('demo_admin_session');
+          }
+        }
+
         // Check if user is authenticated
         if (!user) {
           router.push('/auth/login?redirectTo=/admin');
@@ -66,6 +79,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [user, router, supabase, setProfile]);
 
   const handleSignOut = async () => {
+    // Clear demo session if it exists
+    localStorage.removeItem('demo_admin_session');
+    document.cookie = 'demo_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     await supabase.auth.signOut();
     router.push('/');
   };

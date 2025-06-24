@@ -22,8 +22,41 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
+    // Demo admin bypass
+    if (email === 'labrioche@demo.com' && password === 'demo123') {
+      // Set demo admin cookie for middleware
+      document.cookie = 'demo_admin_session=true; path=/; max-age=86400'; // 24 hours
+
+      // Create a mock session for demo purposes
+      localStorage.setItem(
+        'demo_admin_session',
+        JSON.stringify({
+          user: {
+            id: 'demo-admin-id',
+            email: 'labrioche@demo.com',
+            user_metadata: {
+              full_name: 'Demo Admin',
+            },
+          },
+          profile: {
+            id: 'demo-admin-id',
+            full_name: 'Demo Admin',
+            phone: '(757) 555-DEMO',
+            avatar_url: null,
+            role: 'admin',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+        })
+      );
+
+      // Redirect to admin dashboard
+      router.push('/admin');
+      return;
+    }
+
     const supabase = createClient();
-    
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -57,21 +90,14 @@ export default function LoginPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Welcome Back</CardTitle>
-            <CardDescription>
-              Sign in to your account to continue
-            </CardDescription>
+            <CardDescription>Sign in to your account to continue</CardDescription>
           </CardHeader>
-          
+
           <CardContent className="space-y-6">
-            <Button
-              onClick={handleGoogleSignIn}
-              variant="outline"
-              className="w-full"
-              type="button"
-            >
+            <Button onClick={handleGoogleSignIn} variant="outline" className="w-full" type="button">
               Continue with Google
             </Button>
-            
+
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -128,19 +154,29 @@ export default function LoginPage() {
               </div>
 
               {error && (
-                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
-                  {error}
-                </div>
+                <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">{error}</div>
               )}
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-              >
+              <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? 'Signing in...' : 'Sign in'}
               </Button>
             </form>
+
+            {/* Demo Admin Access */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Admin Access</h4>
+              <div className="space-y-1 text-xs text-blue-800">
+                <p>
+                  <strong>Email:</strong> labrioche@demo.com
+                </p>
+                <p>
+                  <strong>Password:</strong> demo123
+                </p>
+                <p className="text-blue-600 mt-2">
+                  Use these credentials to access the admin dashboard
+                </p>
+              </div>
+            </div>
 
             <div className="text-center space-y-2">
               <Link
@@ -149,7 +185,7 @@ export default function LoginPage() {
               >
                 Forgot your password?
               </Link>
-              
+
               <p className="text-sm text-muted-foreground">
                 Don&apos;t have an account?{' '}
                 <Link href="/auth/signup" className="text-primary hover:underline">
