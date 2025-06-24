@@ -114,8 +114,9 @@ test.describe('Performance Tests', () => {
     page.on('response', (response) => {
       responses.push({
         url: response.url(),
-        size: response.headers()['content-length'],
-        type: response.headers()['content-type'],
+        status: response.status(),
+        size: parseInt(response.headers()['content-length'] || '0'),
+        contentType: response.headers()['content-type'] || '',
       });
     });
 
@@ -123,11 +124,11 @@ test.describe('Performance Tests', () => {
 
     // Calculate JavaScript bundle size
     const jsResponses = responses.filter(
-      (r) => r.type?.includes('javascript') && r.url.includes('/_next/static/')
+      (r) => r.contentType?.includes('javascript') && r.url.includes('/_next/static/')
     );
 
     const totalJSSize = jsResponses.reduce((total, response) => {
-      return total + (parseInt(response.size) || 0);
+      return total + (response.size || 0);
     }, 0);
 
     // Should be less than 500KB total
