@@ -111,8 +111,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+      <div className="text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">
           Manage your bakery&apos;s online ordering system and business settings
         </p>
@@ -130,14 +130,14 @@ export default function SettingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
-            <div className="space-y-1">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-muted/50 rounded-lg">
+            <div className="space-y-1 flex-1">
               <h4 className="text-sm font-medium">Enable Online Ordering</h4>
               <p className="text-sm text-muted-foreground">
                 When disabled, customers will see a message directing them to call the bakery
               </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 justify-center sm:justify-end">
               {isSaving && <RefreshCw className="h-4 w-4 animate-spin" />}
               <Switch
                 checked={isOrderingEnabled}
@@ -147,20 +147,20 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               <Badge variant={isOrderingEnabled ? 'default' : 'destructive'}>
                 {isOrderingEnabled ? 'Enabled' : 'Disabled'}
               </Badge>
               {!isOrderingEnabled && (
                 <div className="flex items-center gap-1 text-amber-600">
-                  <AlertTriangle className="h-4 w-4" />
+                  <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                   <span className="text-sm">Customers cannot place orders online</span>
                 </div>
               )}
             </div>
             {lastUpdated && (
-              <span className="text-muted-foreground">
+              <span className="text-muted-foreground text-center sm:text-right">
                 Last updated: {lastUpdated.toLocaleString()}
               </span>
             )}
@@ -180,46 +180,48 @@ export default function SettingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Day</TableHead>
-                <TableHead>Opening Time</TableHead>
-                <TableHead>Closing Time</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {businessHours.map((day) => (
-                <TableRow key={day.day}>
-                  <TableCell className="font-medium">{day.day}</TableCell>
-                  <TableCell>
-                    <Input
-                      type="time"
-                      defaultValue={day.open}
-                      className="w-32"
-                      disabled={!day.isOpen}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Input
-                      type="time"
-                      defaultValue={day.close}
-                      className="w-32"
-                      disabled={!day.isOpen}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={day.isOpen ? 'default' : 'secondary'}>
-                      {day.isOpen ? 'Open' : 'Closed'}
-                    </Badge>
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-[100px]">Day</TableHead>
+                  <TableHead className="min-w-[120px]">Opening Time</TableHead>
+                  <TableHead className="min-w-[120px]">Closing Time</TableHead>
+                  <TableHead className="min-w-[80px]">Status</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="mt-4 flex justify-end">
-            <Button>
+              </TableHeader>
+              <TableBody>
+                {businessHours.map((day) => (
+                  <TableRow key={day.day}>
+                    <TableCell className="font-medium">{day.day}</TableCell>
+                    <TableCell>
+                      <Input
+                        type="time"
+                        defaultValue={day.open}
+                        className="w-full sm:w-32"
+                        disabled={!day.isOpen}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Input
+                        type="time"
+                        defaultValue={day.close}
+                        className="w-full sm:w-32"
+                        disabled={!day.isOpen}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={day.isOpen ? 'default' : 'secondary'}>
+                        {day.isOpen ? 'Open' : 'Closed'}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="mt-4 flex justify-center sm:justify-end">
+            <Button className="w-full sm:w-auto">
               <Save className="h-4 w-4 mr-2" />
               Save Hours
             </Button>
@@ -239,17 +241,17 @@ export default function SettingsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium flex items-center gap-2">
-                <Phone className="h-4 w-4" />
+                <Phone className="h-4 w-4 flex-shrink-0" />
                 Phone Number
               </label>
               <Input defaultValue={contactInfo.phone} />
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium flex items-center gap-2">
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4 flex-shrink-0" />
                 Email Address
               </label>
               <Input defaultValue={contactInfo.email} />
@@ -257,13 +259,13 @@ export default function SettingsPage() {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
+              <MapPin className="h-4 w-4 flex-shrink-0" />
               Business Address
             </label>
             <Input defaultValue={contactInfo.address} />
           </div>
-          <div className="flex justify-end">
-            <Button>
+          <div className="flex justify-center sm:justify-end">
+            <Button className="w-full sm:w-auto">
               <Save className="h-4 w-4 mr-2" />
               Save Contact Info
             </Button>
@@ -278,7 +280,7 @@ export default function SettingsPage() {
           <CardDescription>Configure how orders are handled and processed</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Minimum Order Amount</label>
               <Input type="number" defaultValue="15.00" step="0.01" />
@@ -297,24 +299,24 @@ export default function SettingsPage() {
 
           <div className="space-y-3">
             <h4 className="text-sm font-medium">Order Notifications</h4>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <span className="text-sm">Email notifications for new orders</span>
                 <Switch defaultChecked />
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <span className="text-sm">SMS notifications for order updates</span>
                 <Switch defaultChecked />
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                 <span className="text-sm">Auto-confirm orders after payment</span>
                 <Switch defaultChecked />
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end">
-            <Button>
+          <div className="flex justify-center sm:justify-end">
+            <Button className="w-full sm:w-auto">
               <Save className="h-4 w-4 mr-2" />
               Save Order Settings
             </Button>
@@ -339,7 +341,7 @@ export default function SettingsPage() {
             <p className="text-sm text-muted-foreground mb-3">
               Immediately disable all online ordering and display a closure message to customers
             </p>
-            <Button variant="destructive" size="sm">
+            <Button variant="destructive" size="sm" className="w-full sm:w-auto">
               Enable Emergency Closure
             </Button>
           </div>
@@ -349,7 +351,7 @@ export default function SettingsPage() {
             <p className="text-sm text-amber-700 mb-3">
               Temporarily restrict available products (useful for inventory shortages)
             </p>
-            <Button variant="outline" size="sm" className="border-amber-300">
+            <Button variant="outline" size="sm" className="border-amber-300 w-full sm:w-auto">
               Configure Limited Menu
             </Button>
           </div>

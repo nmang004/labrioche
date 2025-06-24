@@ -95,13 +95,13 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+      <div className="text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">Welcome to La Brioche admin dashboard</p>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Total Revenue"
           value={`$${totalRevenue.toFixed(2)}`}
@@ -152,16 +152,16 @@ export default function AdminDashboard() {
       </Card>
 
       {/* Charts Row */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {/* Revenue Over Time */}
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle>Revenue Over Time</CardTitle>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <CardTitle className="text-lg">Revenue Over Time</CardTitle>
               <select
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value)}
-                className="text-sm border rounded px-2 py-1"
+                className="text-sm border rounded px-2 py-1 w-full sm:w-auto"
               >
                 <option value="7">Last 7 days</option>
                 <option value="14">Last 14 days</option>
@@ -170,11 +170,11 @@ export default function AdminDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={orderData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
+                <XAxis dataKey="date" fontSize={12} tick={{ fontSize: 12 }} />
+                <YAxis fontSize={12} tick={{ fontSize: 12 }} />
                 <Tooltip formatter={(value) => `$${value}`} />
                 <Legend />
                 <Line
@@ -192,10 +192,10 @@ export default function AdminDashboard() {
         {/* Product Popularity */}
         <Card>
           <CardHeader>
-            <CardTitle>Top Products</CardTitle>
+            <CardTitle className="text-lg">Top Products</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={productPopularity}
@@ -203,7 +203,7 @@ export default function AdminDashboard() {
                   cy="50%"
                   labelLine={false}
                   label={({ name, percentage }) => `${name} ${percentage}%`}
-                  outerRadius={80}
+                  outerRadius={60}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -221,14 +221,14 @@ export default function AdminDashboard() {
       {/* Peak Hours Chart */}
       <Card>
         <CardHeader>
-          <CardTitle>Peak Ordering Hours</CardTitle>
+          <CardTitle className="text-lg">Peak Ordering Hours</CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={250}>
             <BarChart data={peakHoursData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" />
-              <YAxis />
+              <XAxis dataKey="hour" fontSize={12} tick={{ fontSize: 12 }} />
+              <YAxis fontSize={12} tick={{ fontSize: 12 }} />
               <Tooltip />
               <Bar dataKey="orders" fill="#3b82f6" name="Orders" />
             </BarChart>
@@ -239,29 +239,29 @@ export default function AdminDashboard() {
       {/* Recent Activity Summary */}
       <Card>
         <CardHeader>
-          <CardTitle>Business Insights</CardTitle>
+          <CardTitle className="text-lg">Business Insights</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
             <div>
-              <h4 className="font-semibold mb-2">Busiest Days</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-semibold mb-3">Busiest Days</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>• Saturdays: Average 52 orders</li>
                 <li>• Sundays: Average 48 orders</li>
                 <li>• Fridays: Average 38 orders</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">Customer Favorites</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-semibold mb-3">Customer Favorites</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>• Morning: Croissants & Coffee</li>
                 <li>• Lunch: Quiche & Sandwiches</li>
                 <li>• Afternoon: Macarons & Pastries</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">Growth Opportunities</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
+              <h4 className="font-semibold mb-3">Growth Opportunities</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>• Increase weekday lunch offerings</li>
                 <li>• Promote catering services</li>
                 <li>• Add seasonal specials</li>

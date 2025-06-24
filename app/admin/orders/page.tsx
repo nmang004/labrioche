@@ -171,24 +171,24 @@ export default function OrdersPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Orders</h1>
           <p className="text-muted-foreground">Manage all customer orders</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button variant="outline" className="w-full sm:w-auto">
             <Download className="h-4 w-4 mr-2" />
-            Export
+            <span className="sm:inline">Export</span>
           </Button>
           <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="w-full sm:w-auto">
                 <Plus className="h-4 w-4 mr-2" />
-                Create Manual Order
+                <span className="sm:inline">Create Manual Order</span>
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl mx-4 sm:mx-auto">
               <DialogHeader>
                 <DialogTitle>Create Manual Order</DialogTitle>
                 <DialogDescription>
@@ -196,7 +196,7 @@ export default function OrdersPage() {
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium">Customer Name</label>
                     <Input placeholder="Enter customer name" />
@@ -209,7 +209,7 @@ export default function OrdersPage() {
                 <div>
                   <label className="text-sm font-medium">Products</label>
                   <div className="mt-2 space-y-2">
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <Select>
                         <SelectTrigger className="flex-1">
                           <SelectValue placeholder="Select product" />
@@ -222,8 +222,12 @@ export default function OrdersPage() {
                           <SelectItem value="macaron">Macaron Box - $28.00</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Input type="number" placeholder="Qty" className="w-20" />
-                      <Button variant="outline">Add</Button>
+                      <div className="flex gap-2">
+                        <Input type="number" placeholder="Qty" className="w-20 flex-shrink-0" />
+                        <Button variant="outline" className="flex-shrink-0">
+                          Add
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -232,11 +236,17 @@ export default function OrdersPage() {
                   <div className="text-2xl font-bold mt-1">$0.00</div>
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsCreateModalOpen(false)}>
+              <DialogFooter className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsCreateModalOpen(false)}
+                  className="w-full sm:w-auto"
+                >
                   Cancel
                 </Button>
-                <Button onClick={() => setIsCreateModalOpen(false)}>Create Order</Button>
+                <Button onClick={() => setIsCreateModalOpen(false)} className="w-full sm:w-auto">
+                  Create Order
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
@@ -249,7 +259,7 @@ export default function OrdersPage() {
           <CardTitle>Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -262,7 +272,7 @@ export default function OrdersPage() {
               </div>
             </div>
             <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full sm:w-[180px]">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
@@ -281,113 +291,122 @@ export default function OrdersPage() {
       {/* Orders Table */}
       <Card>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Date & Time</TableHead>
-                <TableHead>Items</TableHead>
-                <TableHead>Total</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paginatedOrders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.id}</TableCell>
-                  <TableCell>
-                    <div>
-                      <div className="font-medium">{order.customer}</div>
-                      <div className="text-sm text-muted-foreground flex items-center gap-2">
-                        {order.email && (
-                          <span className="flex items-center gap-1">
-                            <Mail className="h-3 w-3" />
-                            {order.email}
-                          </span>
-                        )}
-                        <span className="flex items-center gap-1">
-                          <Phone className="h-3 w-3" />
-                          {order.phone}
-                        </span>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div>
-                      <div>{format(order.date, 'MMM dd, yyyy')}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {format(order.date, 'h:mm a')}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="text-sm">
-                      {order.items.length} items
-                      <div className="text-muted-foreground">
-                        {order.items[0].product} {order.items.length > 1 && '...'}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-medium">${order.totalPrice.toFixed(2)}</TableCell>
-                  <TableCell>
-                    <Badge className={statusColors[order.status as keyof typeof statusColors]}>
-                      {order.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={order.type === 'manual' ? 'outline' : 'default'}>
-                      {order.type}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button size="sm" variant="ghost" onClick={() => setSelectedOrder(order)}>
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Select
-                        value={order.status}
-                        onValueChange={(value) => handleStatusUpdate(order.id, value)}
-                      >
-                        <SelectTrigger className="h-8 w-[120px]">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="pending">Pending</SelectItem>
-                          <SelectItem value="confirmed">Confirmed</SelectItem>
-                          <SelectItem value="ready">Ready</SelectItem>
-                          <SelectItem value="completed">Completed</SelectItem>
-                          <SelectItem value="cancelled">Cancelled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-[120px]">Order ID</TableHead>
+                  <TableHead className="min-w-[150px]">Customer</TableHead>
+                  <TableHead className="min-w-[100px]">Date & Time</TableHead>
+                  <TableHead className="min-w-[80px]">Items</TableHead>
+                  <TableHead className="min-w-[80px]">Total</TableHead>
+                  <TableHead className="min-w-[100px]">Status</TableHead>
+                  <TableHead className="min-w-[80px]">Type</TableHead>
+                  <TableHead className="min-w-[180px]">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {paginatedOrders.map((order) => (
+                  <TableRow key={order.id}>
+                    <TableCell className="font-medium">{order.id}</TableCell>
+                    <TableCell>
+                      <div>
+                        <div className="font-medium">{order.customer}</div>
+                        <div className="text-sm text-muted-foreground flex items-center gap-2">
+                          {order.email && (
+                            <span className="flex items-center gap-1">
+                              <Mail className="h-3 w-3" />
+                              {order.email}
+                            </span>
+                          )}
+                          <span className="flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            {order.phone}
+                          </span>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <div>{format(order.date, 'MMM dd, yyyy')}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {format(order.date, 'h:mm a')}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        {order.items.length} items
+                        <div className="text-muted-foreground">
+                          {order.items[0].product} {order.items.length > 1 && '...'}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-medium">${order.totalPrice.toFixed(2)}</TableCell>
+                    <TableCell>
+                      <Badge className={statusColors[order.status as keyof typeof statusColors]}>
+                        {order.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={order.type === 'manual' ? 'outline' : 'default'}>
+                        {order.type}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setSelectedOrder(order)}
+                          className="w-full sm:w-auto justify-start sm:justify-center"
+                        >
+                          <Eye className="h-4 w-4 sm:mr-0 mr-2" />
+                          <span className="sm:hidden">View</span>
+                        </Button>
+                        <Select
+                          value={order.status}
+                          onValueChange={(value) => handleStatusUpdate(order.id, value)}
+                        >
+                          <SelectTrigger className="h-8 w-full sm:w-[120px]">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="confirmed">Confirmed</SelectItem>
+                            <SelectItem value="ready">Ready</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="cancelled">Cancelled</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="text-sm text-muted-foreground text-center sm:text-left">
             Showing {startIndex + 1} to {Math.min(endIndex, filteredOrders.length)} of{' '}
             {filteredOrders.length} orders
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
+              className="px-3 py-1"
             >
               Previous
             </Button>
-            <div className="flex items-center gap-1">
+            <div className="hidden sm:flex items-center gap-1">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <Button
                   key={page}
@@ -400,11 +419,15 @@ export default function OrdersPage() {
                 </Button>
               ))}
             </div>
+            <div className="sm:hidden text-sm text-muted-foreground px-2">
+              {currentPage} / {totalPages}
+            </div>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={currentPage === totalPages}
+              className="px-3 py-1"
             >
               Next
             </Button>
@@ -414,13 +437,15 @@ export default function OrdersPage() {
 
       {/* Order Details Modal */}
       <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl mx-4 sm:mx-auto max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Order Details - {selectedOrder?.id}</DialogTitle>
+            <DialogTitle className="text-lg sm:text-xl">
+              Order Details - {selectedOrder?.id}
+            </DialogTitle>
           </DialogHeader>
           {selectedOrder && (
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold mb-2">Customer Information</h4>
                   <div className="space-y-1 text-sm">

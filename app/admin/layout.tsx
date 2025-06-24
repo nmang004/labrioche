@@ -107,21 +107,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform lg:translate-x-0 lg:static lg:inset-0',
+          'fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0',
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         <div className="flex h-full flex-col">
           {/* Logo */}
-          <div className="flex h-16 items-center justify-between px-6 border-b">
-            <h2 className="text-xl font-semibold">La Brioche Admin</h2>
-            <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden">
+          <div className="flex h-16 items-center justify-between px-4 sm:px-6 border-b">
+            <h2 className="text-lg sm:text-xl font-semibold">La Brioche Admin</h2>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="lg:hidden p-1 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               <X className="h-5 w-5" />
             </button>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-1 px-3 py-4">
+          <nav className="flex-1 space-y-1 px-2 sm:px-3 py-4">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -129,14 +132,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    'flex items-center gap-3 rounded-lg px-3 py-3 sm:py-2 text-sm font-medium transition-colors active:scale-95',
                     isActive
                       ? 'bg-primary text-primary-foreground'
                       : 'text-gray-700 hover:bg-gray-100'
                   )}
                   onClick={() => setIsSidebarOpen(false)}
                 >
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className="h-5 w-5 flex-shrink-0" />
                   {item.name}
                 </Link>
               );
@@ -144,17 +147,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
 
           {/* User info and sign out */}
-          <div className="border-t p-4">
-            <div className="mb-3 px-3">
-              <p className="text-sm font-medium text-gray-900">
+          <div className="border-t p-3 sm:p-4">
+            <div className="mb-3 px-2 sm:px-3">
+              <p className="text-sm font-medium text-gray-900 truncate">
                 {profile?.full_name || user?.email}
               </p>
               <p className="text-xs text-gray-500">
                 {profile?.role === 'admin' ? 'Administrator' : 'User'}
               </p>
             </div>
-            <Button variant="outline" className="w-full justify-start" onClick={handleSignOut}>
-              <LogOut className="mr-2 h-4 w-4" />
+            <Button
+              variant="outline"
+              className="w-full justify-start text-sm py-2.5 active:scale-95 transition-transform"
+              onClick={handleSignOut}
+            >
+              <LogOut className="mr-2 h-4 w-4 flex-shrink-0" />
               Sign Out
             </Button>
           </div>
@@ -164,17 +171,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main content */}
       <div className="flex-1 flex flex-col">
         {/* Top bar */}
-        <header className="flex h-16 items-center gap-4 border-b bg-white px-6">
-          <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden">
-            <Menu className="h-6 w-6" />
+        <header className="flex h-16 items-center gap-4 border-b bg-white px-4 sm:px-6">
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors active:scale-95"
+          >
+            <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
           </button>
-          <h1 className="text-lg font-semibold">
+          <h1 className="text-base sm:text-lg font-semibold truncate">
             {navigation.find((item) => item.href === pathname)?.name || 'Admin Dashboard'}
           </h1>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">{children}</main>
       </div>
     </div>
   );
