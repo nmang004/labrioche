@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/ui/product-card';
@@ -138,10 +139,15 @@ export default function HomePage() {
                 </Link>
               </Button>
             </div>
-            <div className="relative h-[400px] rounded-lg overflow-hidden bg-gradient-to-br from-secondary to-accent/30">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white/50 text-lg font-medium">Baker at Work</span>
-              </div>
+            <div className="relative h-[500px] rounded-lg overflow-hidden">
+              <Image
+                src="/photos/yvan.webp"
+                alt="Yvan, master baker at La Brioche"
+                fill
+                className="object-cover object-center"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
             </div>
           </div>
         </div>
