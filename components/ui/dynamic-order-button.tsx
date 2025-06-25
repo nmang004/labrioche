@@ -114,7 +114,10 @@ export function DynamicOrderButton({
       <div className={cn('flex gap-2', className)}>
         <Button
           onClick={handleAddToCart}
-          className={cn('flex-1', isAdded && 'bg-green-600 hover:bg-green-700')}
+          className={cn(
+            'flex-1',
+            isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
+          )}
           size={size}
           disabled={isAdded}
         >
@@ -151,7 +154,10 @@ export function DynamicOrderButton({
       <div className={cn('flex gap-2', className)}>
         <Button
           onClick={handleQuickReorder}
-          className={cn('flex-1', isAdded && 'bg-green-600 hover:bg-green-700')}
+          className={cn(
+            'flex-1',
+            isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
+          )}
           size={size}
           disabled={isAdded}
         >
@@ -186,7 +192,10 @@ export function DynamicOrderButton({
     <div className={cn('flex gap-2', className)}>
       <Button
         onClick={handleAddToCart}
-        className={cn('flex-1', isAdded && 'bg-green-600 hover:bg-green-700')}
+        className={cn(
+          'flex-1',
+          isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
+        )}
         size={size}
         disabled={isAdded}
       >
