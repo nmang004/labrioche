@@ -115,23 +115,27 @@ export function DynamicOrderButton({
         <Button
           onClick={handleAddToCart}
           className={cn(
-            'flex-1',
+            'flex-1 transition-all duration-300 ease-in-out',
             isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
           )}
           size={size}
           disabled={isAdded}
         >
-          {isAdded ? (
-            <>
-              <CheckCircle className="mr-2 h-4 w-4" />
-              Added to Cart
-            </>
-          ) : (
-            <>
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Add to Cart
-            </>
-          )}
+          <span className="flex items-center transition-opacity duration-300">
+            {isAdded ? (
+              <>
+                <CheckCircle className="mr-2 h-4 w-4 animate-in fade-in zoom-in duration-300" />
+                <span className="animate-in fade-in slide-in-from-bottom-1 duration-300">
+                  Added to Cart
+                </span>
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="mr-2 h-4 w-4" />
+                <span>Add to Cart</span>
+              </>
+            )}
+          </span>
         </Button>
         {showFavoriteButton && (
           <Button
@@ -155,23 +159,27 @@ export function DynamicOrderButton({
         <Button
           onClick={handleQuickReorder}
           className={cn(
-            'flex-1',
+            'flex-1 transition-all duration-300 ease-in-out',
             isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
           )}
           size={size}
           disabled={isAdded}
         >
-          {isAdded ? (
-            <>
-              <CheckCircle className="mr-2 h-4 w-4" />
-              Added to Cart
-            </>
-          ) : (
-            <>
-              <RotateCcw className="mr-2 h-4 w-4" />
-              Reorder
-            </>
-          )}
+          <span className="flex items-center transition-opacity duration-300">
+            {isAdded ? (
+              <>
+                <CheckCircle className="mr-2 h-4 w-4 animate-in fade-in zoom-in duration-300" />
+                <span className="animate-in fade-in slide-in-from-bottom-1 duration-300">
+                  Added to Cart
+                </span>
+              </>
+            ) : (
+              <>
+                <RotateCcw className="mr-2 h-4 w-4" />
+                <span>Reorder</span>
+              </>
+            )}
+          </span>
         </Button>
         {showFavoriteButton && (
           <Button
@@ -193,23 +201,27 @@ export function DynamicOrderButton({
       <Button
         onClick={handleAddToCart}
         className={cn(
-          'flex-1',
+          'flex-1 transition-all duration-300 ease-in-out',
           isAdded && 'bg-emerald-600 hover:bg-emerald-700 text-white border-emerald-600'
         )}
         size={size}
         disabled={isAdded}
       >
-        {isAdded ? (
-          <>
-            <CheckCircle className="mr-2 h-4 w-4" />
-            Added to Cart
-          </>
-        ) : (
-          <>
-            <ShoppingCart className="mr-2 h-4 w-4" />
-            Add to Cart
-          </>
-        )}
+        <span className="flex items-center transition-opacity duration-300">
+          {isAdded ? (
+            <>
+              <CheckCircle className="mr-2 h-4 w-4 animate-in fade-in zoom-in duration-300" />
+              <span className="animate-in fade-in slide-in-from-bottom-1 duration-300">
+                Added to Cart
+              </span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              <span>Add to Cart</span>
+            </>
+          )}
+        </span>
       </Button>
       {showFavoriteButton && (
         <Button
