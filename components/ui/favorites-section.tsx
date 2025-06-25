@@ -10,6 +10,7 @@ import { useAuthStore } from '@/lib/stores/auth-store';
 import { cn } from '@/lib/utils/cn';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { ProductModal } from './product-modal';
 
 interface FavoriteCardProps {
   favorite: { id: string; name: string; price: number; image: string; dateAdded: string };
@@ -20,61 +21,86 @@ interface FavoriteCardProps {
 function FavoriteCard({ favorite, onAddToCart, onRemoveFavorite }: FavoriteCardProps) {
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <Card className="group overflow-hidden">
-      <div className="relative aspect-square overflow-hidden bg-muted">
-        {!imageError && (
-          <Image
-            src={favorite.image}
-            alt={favorite.name}
-            fill
-            className={cn(
-              'object-cover transition-transform group-hover:scale-105',
-              !imageLoaded && 'opacity-0'
-            )}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            onError={() => setImageError(true)}
-            onLoad={() => setImageLoaded(true)}
-          />
-        )}
+    <>
+      <Card className="group overflow-hidden cursor-pointer" onClick={() => setModalOpen(true)}>
+        <div className="relative aspect-square overflow-hidden bg-muted">
+          {!imageError && (
+            <Image
+              src={favorite.image}
+              alt={favorite.name}
+              fill
+              className={cn(
+                'object-cover transition-transform group-hover:scale-105',
+                !imageLoaded && 'opacity-0'
+              )}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              onError={() => setImageError(true)}
+              onLoad={() => setImageLoaded(true)}
+            />
+          )}
 
-        {/* Fallback icon display */}
-        {(imageError || !imageLoaded) && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/10">
-            <div className="relative">
-              <Grape className="h-12 w-12 text-primary/60 transition-transform group-hover:scale-110" />
-              <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 scale-150" />
+          {/* Fallback icon display */}
+          {(imageError || !imageLoaded) && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/10">
+              <div className="relative">
+                <Grape className="h-12 w-12 text-primary/60 transition-transform group-hover:scale-110" />
+                <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 scale-150" />
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => onRemoveFavorite(favorite.id)}
-          className="absolute top-2 right-2 p-2 h-auto"
-          title="Remove from favorites"
-        >
-          <Heart className="h-4 w-4 fill-current text-red-600" />
-        </Button>
-      </div>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemoveFavorite(favorite.id);
+            }}
+            className="absolute top-2 right-2 p-2 h-auto"
+            title="Remove from favorites"
+          >
+            <Heart className="h-4 w-4 fill-current text-red-600" />
+          </Button>
+        </div>
 
-      <CardContent className="p-4">
-        <h3 className="font-semibold text-lg">{favorite.name}</h3>
-        <p className="text-lg font-bold text-primary mt-2">${favorite.price.toFixed(2)}</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Added {new Date(favorite.dateAdded).toLocaleDateString()}
-        </p>
-      </CardContent>
+        <CardContent className="p-4">
+          <h3 className="font-semibold text-lg">{favorite.name}</h3>
+          <p className="text-lg font-bold text-primary mt-2">${favorite.price.toFixed(2)}</p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Added {new Date(favorite.dateAdded).toLocaleDateString()}
+          </p>
+        </CardContent>
 
-      <CardFooter className="p-4 pt-0">
-        <Button onClick={() => onAddToCart(favorite)} className="w-full" size="sm">
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+        <CardFooter className="p-4 pt-0">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(favorite);
+            }}
+            className="w-full"
+            size="sm"
+          >
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
+          </Button>
+        </CardFooter>
+      </Card>
+
+      <ProductModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        product={{
+          id: favorite.id,
+          name: favorite.name,
+          price: favorite.price,
+          image: favorite.image,
+          available: true,
+        }}
+      />
+    </>
   );
 }
 

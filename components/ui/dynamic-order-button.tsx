@@ -17,6 +17,7 @@ interface DynamicOrderButtonProps {
   className?: string;
   size?: 'sm' | 'default' | 'lg';
   showFavoriteButton?: boolean;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 export function DynamicOrderButton({
@@ -28,6 +29,7 @@ export function DynamicOrderButton({
   className,
   size = 'sm',
   showFavoriteButton = true,
+  onClick,
 }: DynamicOrderButtonProps) {
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
@@ -36,12 +38,15 @@ export function DynamicOrderButton({
   const addFavorite = useFavoritesStore((state) => state.addFavorite);
   const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
   const isFavorite = useFavoritesStore((state) => state.isFavorite);
-  
+
   // Check if user has ordered this item before
-  const hasOrderedBefore = user && items.some(item => item.id === id);
+  const hasOrderedBefore = user && items.some((item) => item.id === id);
   const isCurrentlyFavorited = isFavorite(id);
-  
-  const handleAddToCart = () => {
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    if (onClick) {
+      onClick(e);
+    }
     if (available) {
       addItem({
         id,
@@ -65,8 +70,8 @@ export function DynamicOrderButton({
     }
   };
 
-  const handleQuickReorder = () => {
-    handleAddToCart();
+  const handleQuickReorder = (e: React.MouseEvent) => {
+    handleAddToCart(e);
   };
 
   const handleSignInPrompt = () => {
@@ -84,10 +89,7 @@ export function DynamicOrderButton({
             variant="outline"
             size={size}
             onClick={handleToggleFavorite}
-            className={cn(
-              'px-3',
-              isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50'
-            )}
+            className={cn('px-3', isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50')}
           >
             <Heart className={cn('h-4 w-4', isCurrentlyFavorited && 'fill-current')} />
           </Button>
@@ -132,10 +134,7 @@ export function DynamicOrderButton({
             variant="outline"
             size={size}
             onClick={handleToggleFavorite}
-            className={cn(
-              'px-3',
-              isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50'
-            )}
+            className={cn('px-3', isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50')}
           >
             <Heart className={cn('h-4 w-4', isCurrentlyFavorited && 'fill-current')} />
           </Button>
@@ -156,10 +155,7 @@ export function DynamicOrderButton({
           variant="outline"
           size={size}
           onClick={handleToggleFavorite}
-          className={cn(
-            'px-3',
-            isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50'
-          )}
+          className={cn('px-3', isCurrentlyFavorited && 'text-red-600 border-red-200 bg-red-50')}
         >
           <Heart className={cn('h-4 w-4', isCurrentlyFavorited && 'fill-current')} />
         </Button>
