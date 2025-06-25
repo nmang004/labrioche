@@ -45,9 +45,12 @@ const contactInfo = {
 
 export default function SettingsPage() {
   const [isOrderingEnabled, setIsOrderingEnabled] = useState(true);
+  const [isConfirmationRequired, setIsConfirmationRequired] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isSavingConfirmation, setIsSavingConfirmation] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [lastUpdatedConfirmation, setLastUpdatedConfirmation] = useState<Date | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
@@ -60,15 +63,21 @@ export default function SettingsPage() {
       const { data, error } = await supabase
         .from('system_settings')
         .select('*')
-        .eq('key', 'is_ordering_enabled')
-        .single();
+        .in('key', ['is_ordering_enabled', 'is_confirmation_required']);
 
       if (error && error.code !== 'PGRST116') {
         // PGRST116 = row not found
         console.error('Error fetching system settings:', error);
       } else if (data) {
-        setIsOrderingEnabled(data.value === 'true');
-        setLastUpdated(new Date(data.updated_at));
+        data.forEach((setting) => {
+          if (setting.key === 'is_ordering_enabled') {
+            setIsOrderingEnabled(setting.value === 'true');
+            setLastUpdated(new Date(setting.updated_at));
+          } else if (setting.key === 'is_confirmation_required') {
+            setIsConfirmationRequired(setting.value === 'true');
+            setLastUpdatedConfirmation(new Date(setting.updated_at));
+          }
+        });
       }
     } catch (error) {
       console.error('Error fetching system settings:', error);
@@ -97,6 +106,32 @@ export default function SettingsPage() {
       setIsOrderingEnabled(!enabled);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const updateConfirmationRequired = async (required: boolean) => {
+    setIsSavingConfirmation(true);
+    try {
+      const { error } = await supabase
+        .from('system_settings')
+        .upsert(
+          { key: 'is_confirmation_required', value: required.toString() },
+          { onConflict: 'key' }
+        );
+
+      if (error) {
+        console.error('Error updating confirmation setting:', error);
+        // Revert the switch if there was an error
+        setIsConfirmationRequired(!required);
+      } else {
+        setIsConfirmationRequired(required);
+        setLastUpdatedConfirmation(new Date());
+      }
+    } catch (error) {
+      console.error('Error updating confirmation setting:', error);
+      setIsConfirmationRequired(!required);
+    } finally {
+      setIsSavingConfirmation(false);
     }
   };
 
@@ -165,6 +200,40 @@ export default function SettingsPage() {
               </span>
             )}
           </div>
+
+          {/* Confirmation Required Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-muted/50 rounded-lg">
+            <div className="space-y-1 flex-1">
+              <h4 className="text-sm font-medium">Confirmation Required?</h4>
+              <p className="text-sm text-muted-foreground">
+                When enabled, orders will require manual confirmation before processing payment
+                through Stripe
+              </p>
+            </div>
+            <div className="flex items-center gap-3 justify-center sm:justify-end">
+              {isSavingConfirmation && <RefreshCw className="h-4 w-4 animate-spin" />}
+              <Switch
+                checked={isConfirmationRequired}
+                onCheckedChange={updateConfirmationRequired}
+                disabled={isSavingConfirmation || !isOrderingEnabled}
+              />
+            </div>
+          </div>
+
+          {isConfirmationRequired && isOrderingEnabled && (
+            <div className="flex items-center gap-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
+              <AlertTriangle className="h-4 w-4 text-blue-600 flex-shrink-0" />
+              <span className="text-sm text-blue-800">
+                Orders will be held for manual confirmation before payment processing
+              </span>
+            </div>
+          )}
+
+          {lastUpdatedConfirmation && (
+            <div className="text-sm text-muted-foreground text-center sm:text-right">
+              Confirmation setting last updated: {lastUpdatedConfirmation.toLocaleString()}
+            </div>
+          )}
         </CardContent>
       </Card>
 
