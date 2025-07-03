@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { DynamicHours } from '@/components/ui/dynamic-hours';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -73,20 +74,8 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="flex items-start space-x-4">
-                <Clock className="h-5 w-5 text-primary mt-0.5" />
-                <div>
-                  <p className="font-medium">Hours</p>
-                  <div className="text-muted-foreground space-y-1">
-                    <p>Wednesday: 8:00 AM - 2:00 PM</p>
-                    <p>Thursday: 8:00 AM - 2:00 PM</p>
-                    <p>Friday: 8:00 AM - 5:00 PM</p>
-                    <p>Saturday: 8:00 AM - 2:00 PM</p>
-                    <p>Sunday: 8:30 AM - 12:30 PM</p>
-                    <p>Monday: CLOSED</p>
-                    <p>Tuesday: CLOSED</p>
-                  </div>
-                </div>
+              <div className="space-y-2">
+                <DynamicHours variant="full" />
               </div>
 
               <div className="flex items-start space-x-4">

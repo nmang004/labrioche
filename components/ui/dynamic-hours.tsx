@@ -131,13 +131,7 @@ export function DynamicHours({ variant = 'today-only', className }: DynamicHours
                   isToday && 'font-semibold'
                 )}
               >
-                {isToday && day.isOpen && !isOpen ? (
-                  <>
-                    CLOSED <span className="text-muted-foreground">({day.hours})</span>
-                  </>
-                ) : (
-                  day.hours
-                )}
+                {day.hours}
                 {isToday && day.isOpen && (
                   <span
                     className={cn(
