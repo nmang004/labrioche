@@ -54,12 +54,12 @@ export function Header() {
           {/* Right side actions */}
           <div className="flex items-center space-x-4">
             {/* User account */}
-            <Button variant="ghost" size="icon" className="hidden md:flex" asChild>
-              <Link href={user ? '/account/profile' : '/auth/login'}>
+            <Link href={user ? '/account/profile' : '/auth/login'} className="hidden md:flex">
+              <Button variant="ghost" size="icon">
                 <User className="h-5 w-5" />
                 <span className="sr-only">Account</span>
-              </Link>
-            </Button>
+              </Button>
+            </Link>
 
             {/* Shopping cart */}
             <CartDrawer />

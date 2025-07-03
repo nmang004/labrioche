@@ -15,12 +15,13 @@ export function usePromotions() {
       try {
         setLoading(true);
         setError(null);
-        
+
         const data = await sanityClient.fetch(ACTIVE_PROMOTIONS_QUERY);
         setPromotions(data || []);
-      } catch (err) {
-        console.error('Error fetching promotions:', err);
-        setError('Failed to load promotions');
+      } catch {
+        // Silently fail and use empty array - fallback to no promotions
+        setPromotions([]);
+        setError(null);
       } finally {
         setLoading(false);
       }
@@ -34,9 +35,10 @@ export function usePromotions() {
       setLoading(true);
       const data = await sanityClient.fetch(ACTIVE_PROMOTIONS_QUERY);
       setPromotions(data || []);
-    } catch (err) {
-      console.error('Error refetching promotions:', err);
-      setError('Failed to reload promotions');
+    } catch {
+      // Silently fail and use empty array - fallback to no promotions
+      setPromotions([]);
+      setError(null);
     } finally {
       setLoading(false);
     }

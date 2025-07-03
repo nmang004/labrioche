@@ -40,8 +40,13 @@ export function ProductRecommendations({
 
         if (!user) {
           // For guests, show featured products
-          const featuredProducts = await sanityClient.fetch(FEATURED_PRODUCTS_QUERY);
-          setRecommendations(featuredProducts.slice(0, maxItems));
+          try {
+            const featuredProducts = await sanityClient.fetch(FEATURED_PRODUCTS_QUERY);
+            setRecommendations(featuredProducts.slice(0, maxItems));
+          } catch {
+            // Silently fail if Sanity is not available
+            setRecommendations([]);
+          }
           return;
         }
 
@@ -91,16 +96,9 @@ export function ProductRecommendations({
           .map((item: ScoredProduct) => item.product);
 
         setRecommendations(topRecommendations);
-      } catch (error) {
-        console.error('Error generating recommendations:', error);
-        // Fallback to featured products
-        try {
-          const featuredProducts = await sanityClient.fetch(FEATURED_PRODUCTS_QUERY);
-          setRecommendations(featuredProducts.slice(0, maxItems));
-        } catch (fallbackError) {
-          console.error('Error loading fallback recommendations:', fallbackError);
-          setRecommendations([]);
-        }
+      } catch {
+        // Silently fail - recommendations are optional
+        setRecommendations([]);
       } finally {
         setLoading(false);
       }

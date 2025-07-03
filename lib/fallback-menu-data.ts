@@ -64,7 +64,7 @@ export const fallbackProducts: Product[] = [
     featured: true,
     ingredients: ['French butter', 'flour', 'yeast', 'salt'],
     allergens: ['gluten', 'dairy'],
-    image: '/images/fallback/croissant.jpg',
+    image: '/photos/Croissant.webp',
     _updatedAt: new Date().toISOString(),
     category: {
       _id: 'pastries',

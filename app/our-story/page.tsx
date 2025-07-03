@@ -121,10 +121,14 @@ export default async function OurStoryPage() {
               dedication to authentic French baking.
             </p>
           </div>
-          <div className="relative h-[400px] rounded-lg overflow-hidden bg-gradient-to-br from-secondary to-accent/30">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-white/50 text-lg font-medium">Our Bakery</span>
-            </div>
+          <div className="relative h-[400px] rounded-lg overflow-hidden">
+            <Image
+              src="/photos/Storefront.webp"
+              alt="La Brioche storefront on Colley Avenue"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
         </div>
 
