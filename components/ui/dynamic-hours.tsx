@@ -71,7 +71,7 @@ export function DynamicHours({ variant = 'today-only', className }: DynamicHours
         <span className="text-sm">
           {todayHours.isOpen ? (
             <>
-              Today ({todayHours.day}): {isOpen ? todayHours.hours : 'CLOSED'}
+              Today ({todayHours.day}): {todayHours.hours}
               <span
                 className={cn(
                   'ml-2 px-2 py-0.5 rounded-full text-xs font-medium',
@@ -80,7 +80,6 @@ export function DynamicHours({ variant = 'today-only', className }: DynamicHours
               >
                 {isOpen ? 'OPEN' : 'CLOSED'}
               </span>
-              {!isOpen && <span className="text-muted-foreground"> ({todayHours.hours})</span>}
             </>
           ) : (
             <>
